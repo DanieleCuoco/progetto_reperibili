@@ -1,0 +1,205 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background-color: #121212;
+    color: #fff;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.fullscreen-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    padding: 0;
+    margin: 0;
+}
+
+.calendar-container {
+    width: 95vw;
+    height: 95vh;
+    margin: 0;
+    padding: 2vh 2vw;
+    background: rgba(34, 34, 34, 0.8);
+    border-radius: 16px;
+    box-shadow: 0 0 30px rgba(0, 191, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+}
+
+.calendar-header {
+    flex: 0 0 auto;
+    padding-bottom: 1vh;
+}
+
+.calendar-header h1 {
+    color: #fff;
+    font-weight: 300;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(0, 191, 255, 0.5);
+    margin: 0;
+    text-align: center;
+}
+
+.calendar-body {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-weight: 600;
+    background: rgba(51, 51, 51, 0.7);
+    padding: 1vh 0;
+    border-radius: 12px;
+    color: #fff;
+    margin-bottom: 1vh;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.weekdays div {
+    padding: 0.5vh;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    gap: 1vh;
+    flex: 1;
+    padding: 0.5vh;
+}
+
+.day {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(34, 34, 34, 0.7);
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.day-number {
+    font-size: 1.5rem;
+    font-weight: 500;
+    position: relative;
+    z-index: 2;
+}
+
+.day:hover {
+    box-shadow: 0 0 20px rgba(0, 191, 255, 0.6), 0 0 30px rgba(255, 215, 0, 0.3);
+    transform: translateY(-5px) scale(1.05);
+    background: rgba(51, 51, 51, 0.8);
+}
+
+.day:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, transparent 60%, rgba(0, 191, 255, 0.1));
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: 1;
+}
+
+.day:hover:before {
+    opacity: 1;
+}
+
+.today {
+    background: rgba(0, 191, 255, 0.2);
+    box-shadow: 0 0 20px rgba(0, 191, 255, 0.4);
+}
+
+.today .day-number {
+    color: #fff;
+    font-weight: 700;
+}
+
+.calendar-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2vh;
+    flex-wrap: wrap;
+    gap: 1vh;
+    flex: 0 0 auto;
+}
+
+.calendar-controls button {
+    flex: 1;
+    min-width: 150px;
+    background-color: rgba(34, 34, 34, 0.8);
+    border: none;
+    border-radius: 12px;
+    color: #fff;
+    padding: 1.5vh 2vw;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn-prev:hover, .btn-next:hover {
+    box-shadow: 0 0 20px rgba(0, 191, 255, 0.6);
+    transform: translateY(-3px);
+}
+
+.btn-today {
+    background-color: rgba(0, 191, 255, 0.2);
+}
+
+.btn-today:hover {
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    transform: translateY(-3px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .calendar-container {
+        height: 98vh;
+        width: 98vw;
+        padding: 1vh 1vw;
+    }
+    
+    .day-number {
+        font-size: 1rem;
+    }
+    
+    .calendar-controls {
+        flex-direction: column;
+    }
+    
+    .calendar-controls button {
+        width: 100%;
+        padding: 1vh;
+        font-size: 0.9rem;
+    }
+    
+    .weekdays div {
+        font-size: 0.9rem;
+    }
+}

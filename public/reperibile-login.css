@@ -1,0 +1,112 @@
+body {
+    margin: 0;
+    background-color: #000;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-container {
+    background-color: #111;
+    padding: 30px;
+    border-radius: 14px;
+    width: 320px;
+    box-shadow: 0 0 10px #00bfff, 0 0 20px #ffd700;
+    animation: glow 3s infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        box-shadow: 0 0 10px #00bfff, 0 0 20px #ffd700;
+    }
+    to {
+        box-shadow: 0 0 15px #00bfff, 0 0 30px #ffd700;
+    }
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 24px;
+    color: #ffd700;
+    text-shadow: 0 0 5px #00bfff;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #00bfff;
+}
+
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    background-color: #222;
+    color: white;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+input:focus {
+    outline: none;
+    border-color: #00bfff;
+    box-shadow: 0 0 5px #00bfff;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #222;
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.login-btn:hover {
+    background-color: #333;
+    box-shadow: 0 0 15px #00bfff, 0 0 30px #ffd700;
+}
+
+.alert {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.alert-danger {
+    background-color: rgba(255, 0, 0, 0.2);
+    border: 1px solid #ff0000;
+    color: #ff6666;
+}
+
+.back-link {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.back-link a {
+    color: #00bfff;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.back-link a:hover {
+    color: #ffd700;
+    text-shadow: 0 0 5px #00bfff;
+}
