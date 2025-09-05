@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Reperibile;
+use App\Models\TurnoReperibilita;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class ReperibileController extends Controller
 {
@@ -99,9 +101,21 @@ class ReperibileController extends Controller
      */
     public function destroy(Reperibile $reperibile)
     {
-        $reperibile->delete();
-
-        return redirect()->route('admin.reperibili.index')
-            ->with('success', 'Reperibile eliminato con successo');
+        try {
+            // Ottieni l'ID del reperibile prima di eliminarlo
+            $id = $reperibile->id;
+            
+            // Elimina prima tutti i turni associati direttamente dalla tabella
+            DB::table('turni_reperibilita')->where('reperibile_id', $id)->delete();
+            
+            // Ora elimina il reperibile direttamente dalla tabella
+            DB::table('reperibiles')->where('id', $id)->delete();
+            
+            return redirect()->route('admin.reperibili.index')
+                ->with('success', 'Reperibile eliminato con successo');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.reperibili.index')
+                ->with('error', 'Errore durante l\'eliminazione del reperibile: ' . $e->getMessage());
+        }
     }
 }

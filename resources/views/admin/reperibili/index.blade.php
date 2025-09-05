@@ -154,11 +154,11 @@
             <h2><i class="bi bi-people-fill"></i> Gestione Reperibili</h2>
         </div>
 
-        @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-        @endif
+      @if(session('success'))
+<div class="alert alert-success hidden">
+    {{ session('success') }}
+</div>
+@endif
 
         <a href="{{ route('admin.reperibili.create') }}" class="btn-add">
             <i class="bi bi-plus-circle"></i> Aggiungi Reperibile
@@ -225,5 +225,7 @@
             <p>&copy; {{ date('Y') }} Sistema Gestione Reperibilità - Tutti i diritti riservati</p>
         </div>
     </footer>
+
+    <script src="{{ asset('header-animations.js') }}"></script>
 </body>
 </html>

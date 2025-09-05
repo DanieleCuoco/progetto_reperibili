@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Amministratore</title>
     <link rel="stylesheet" href="{{ asset('dashboard.css') }}">
+    <link rel="stylesheet" href="{{ asset('header-animations.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 </head>
 <body>
-    <header>
+    <header class="header-hidden">
         <div class="container header-content">
-            <h1><i class="bi bi-gear-fill"></i> Sistema Gestione Reperibilità</h1>
-            <div class="user-controls">
+            <h1 class="header-title-hidden"><i class="bi bi-gear-fill"></i> Sistema Gestione Reperibilità</h1>
+            <div class="user-controls user-controls-hidden">
                 <span><i class="bi bi-person-circle"></i> Benvenuto, {{ Auth::guard('admin')->user()->name }}</span>
                 <form method="POST" action="{{ route('admin.logout') }}">
                     @csrf
@@ -50,11 +51,11 @@
 
             <!-- Sezione Gestione Reparti -->
             <div class="card">
-    <div class="card-icon"><i class="bi bi-diagram-3-fill"></i></div>
-    <h2>Gestione Reparti</h2>
-    <p>Gestisci i reparti settoriali e applicativi, crea nuovi reparti e assegna personale.</p>
-    <a href="{{ route('admin.reparti.index') }}" class="card-link"><i class="bi bi-arrow-right-circle"></i> Accedi</a>
-</div>
+                <div class="card-icon"><i class="bi bi-diagram-3-fill"></i></div>
+                <h2>Gestione Reparti</h2>
+                <p>Gestisci i reparti settoriali e applicativi, crea nuovi reparti e assegna personale.</p>
+                <a href="{{ route('admin.reparti.index') }}" class="card-link"><i class="bi bi-arrow-right-circle"></i> Accedi</a>
+            </div>
 
             <!-- Sezione Gestione Modifiche -->
             <div class="card">
@@ -94,45 +95,7 @@
         </div>
     </footer>
     
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Funzione per animare il conteggio
-            function animateCount(element, target) {
-                const duration = 800; // Durata dell'animazione in millisecondi
-                const frameDuration = 1000/60; // 60fps
-                const totalFrames = Math.round(duration / frameDuration);
-                let frame = 0;
-                
-                const counter = setInterval(() => {
-                    frame++;
-                    // Calcolo del valore corrente usando una funzione di easing
-                    const progress = frame / totalFrames;
-                    const currentCount = Math.round(easeOutQuad(progress) * target);
-                    
-                    element.textContent = currentCount;
-                    
-                    if (frame === totalFrames) {
-                        clearInterval(counter);
-                        element.textContent = target; // Assicuriamoci che il valore finale sia esatto
-                    }
-                }, frameDuration);
-            }
-            
-            // Funzione di easing per un'animazione più naturale
-            function easeOutQuad(t) {
-                return t * (2 - t);
-            }
-            
-            // Seleziona tutti gli elementi con classe stat-value
-            const statValues = document.querySelectorAll('.stat-value');
-            
-            // Anima ciascun valore
-            statValues.forEach(element => {
-                const targetValue = parseInt(element.textContent.trim());
-                element.textContent = '0'; // Inizia da zero
-                animateCount(element, targetValue);
-            });
-        });
-    </script>
+    <!-- Aggiungi lo script delle animazioni prima della chiusura del body -->
+    <script src="{{ asset('header-animations.js') }}"></script>
 </body>
 </html>

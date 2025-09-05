@@ -9,6 +9,9 @@ class Reperibile extends Authenticatable
 {
     use Notifiable;
 
+    // Aggiungi questa riga per specificare il nome corretto della tabella
+    protected $table = 'reperibiles';
+
     protected $fillable = [
         'username',
         'password',
