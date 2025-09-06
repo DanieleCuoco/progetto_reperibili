@@ -22,8 +22,26 @@
         <div class="calendar-container">
             <div class="calendar-header">
                 <h1 class="display-4">{{ $calendar['month'] }}</h1>
+                
+                <!-- Aggiunta del selettore di reparto -->
+                <div class="department-filter">
+                    <form id="departmentForm" method="GET" action="{{ route('users.calendar') }}">
+                        @if(request()->has('month'))
+                        <input type="hidden" name="month" value="{{ request()->query('month') }}">
+                        @endif
+                        <select name="department" id="department-select" class="form-select" onchange="this.form.submit()">
+                            <option value="">Tutti i reparti</option>
+                            @foreach($reparti as $reparto)
+                                <option value="{{ $reparto->codice }}" {{ request()->query('department') == $reparto->codice ? 'selected' : '' }}>
+                                    {{ $reparto->nome }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </form>
+                </div>
             </div>
             
+            <!-- Resto del codice del calendario -->
             <div class="calendar-body">
                 <div class="weekdays">
                     <div><i class="bi bi-sun-fill text-warning me-1"></i>Dom</div>
@@ -37,9 +55,9 @@
                 
                 <div class="days">
                     @foreach($calendar['days'] as $day)
-                        <div class="day {{ $day['isToday'] ? 'today' : '' }}">
+                        <div class="day {{ $day['isToday'] ? 'today' : '' }}" 
+                             @if($day['day']) onclick="showDayDetails('{{ $day['date'] }}', {{ json_encode($day['turni']) }})" @endif>
                             <span class="day-number">{{ $day['day'] }}</span>
-                            <!-- Rimosso il codice per la visualizzazione dei turni -->
                         </div>
                     @endforeach
                 </div>
@@ -59,48 +77,30 @@
         </div>
     </div>
     
+    <!-- Modal per i dettagli del giorno -->
+    <div class="modal fade" id="dayDetailsModal" tabindex="-1" aria-labelledby="dayDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="dayDetailsModalLabel">Dettagli del giorno</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h6 id="modalDate" class="mb-3"></h6>
+                    <div id="reperibili-list">
+                        <div class="no-reperibili">Nessun reperibile disponibile per questa data</div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <!-- Bootstrap JS Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- Script per aggiornare automaticamente la pagina a mezzanotte -->
-    <script>
-    function refreshAtMidnight() {
-        var now = new Date();
-        var currentDate = now.getDate();
-        var night = new Date(
-            now.getFullYear(),
-            now.getMonth(),
-            now.getDate() + 1, // il giorno successivo
-            0, 0, 0 // a mezzanotte
-        );
-        var msToMidnight = night.getTime() - now.getTime();
-
-        console.log('Pagina programmata per ricaricarsi a mezzanotte tra ' + msToMidnight + ' millisecondi');
-
-        // Imposta un timeout per ricaricare la pagina a mezzanotte
-        setTimeout(function() {
-            console.log('Ricarico la pagina a mezzanotte!');
-            window.location.href = window.location.pathname + '?nocache=' + new Date().getTime();
-        }, msToMidnight);
-        
-        // Imposta anche un backup per ricaricare ogni 15 minuti
-        setInterval(function() {
-            console.log('Ricarico la pagina (backup ogni 15 minuti)');
-            window.location.reload(true);
-        }, 900000); // 15 minuti in millisecondi
-        
-        // Verifica ogni minuto se la data è cambiata
-        setInterval(function() {
-            var checkNow = new Date();
-            if (checkNow.getDate() !== currentDate) {
-                console.log('La data è cambiata! Ricarico immediatamente');
-                window.location.reload(true);
-            }
-        }, 60000); // 1 minuto in millisecondi
-    }
-
-    // Esegui la funzione quando la pagina è caricata
-    document.addEventListener('DOMContentLoaded', refreshAtMidnight);
-</script>
+    <!-- Custom JS -->
+    <script src="{{ asset('calendar.js') }}?v={{ time() }}"></script>
 </body>
 </html>

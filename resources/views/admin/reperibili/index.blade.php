@@ -186,7 +186,7 @@
                         <td>{{ $reperibile->username }}</td>
                         <td>{{ $reperibile->email }}</td>
                         <td>{{ $reperibile->phone ?? 'N/A' }}</td>
-                        <td>{{ $reperibile->department }}</td>
+                        <td>{{ $reperibile->department }} - {{ $reperibile->reparto ? $reperibile->reparto->nome : '' }}</td>
                         <td>
                             @if($reperibile->is_active)
                             <span class="status-active">Attivo</span>

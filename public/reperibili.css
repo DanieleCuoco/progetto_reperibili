@@ -477,7 +477,7 @@ select:focus {
     flex-direction: column;
     gap: 8px;
     padding: 15px;
-    background-color: #222;
+    background-color: #228;
     border-radius: 8px;
     border-left: 3px solid #00bfff;
     transition: all 0.3s ease;

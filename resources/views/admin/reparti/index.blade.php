@@ -78,7 +78,19 @@
                             'support' => ['class' => 'icon-support', 'icon' => 'bi-headset'],
                             'management' => ['class' => 'icon-management', 'icon' => 'bi-briefcase'],
                             'research' => ['class' => 'icon-research', 'icon' => 'bi-lightbulb'],
-                            'operations' => ['class' => 'icon-operations', 'icon' => 'bi-gear-wide-connected']
+                            'operations' => ['class' => 'icon-operations', 'icon' => 'bi-gear-wide-connected'],
+                            'microsoft' => ['class' => 'icon-microsoft', 'icon' => 'bi-windows'],
+                            'sistemi microsoft' => ['class' => 'icon-microsoft', 'icon' => 'bi-windows'],
+                            'schedulazione' => ['class' => 'icon-schedule-host', 'icon' => 'bi-calendar-check'],
+                            'schedulazione host' => ['class' => 'icon-schedule-host', 'icon' => 'bi-calendar-check'],
+                            'oracle' => ['class' => 'icon-oracle', 'icon' => 'bi-database-fill'],
+                            'unix' => ['class' => 'icon-schedule-unix', 'icon' => 'bi-terminal'],
+                            'zos' => ['class' => 'icon-zos', 'icon' => 'bi-server'],
+                            'file transfer' => ['class' => 'icon-file-transfer', 'icon' => 'bi-file-earmark-arrow-up'],
+                            'mssql' => ['class' => 'icon-mssql', 'icon' => 'bi-database-fill-gear'],
+                            'sql server' => ['class' => 'icon-sql-server', 'icon' => 'bi-database-fill-gear'],
+                            'cloud' => ['class' => 'icon-cloud', 'icon' => 'bi-cloud'],
+                            'monitoring' => ['class' => 'icon-monitoring', 'icon' => 'bi-graph-up']
                         ];
                         
                         // Cerca corrispondenze nel nome o nel codice

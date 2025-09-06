@@ -149,7 +149,9 @@
             
             <div class="detail-group">
                 <div class="detail-label">Reparto</div>
-                <div class="detail-value">{{ $reperibile->department }}</div>
+                <div class="detail-value">
+                    {{ $reperibile->department }} - {{ $reperibile->reparto ? $reperibile->reparto->nome : 'Nome reparto non disponibile' }}
+                </div>
             </div>
             
             <div class="detail-group">
