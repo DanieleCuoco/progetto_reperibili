@@ -61,4 +61,8 @@ document.addEventListener('DOMContentLoaded', function() {
     element.textContent = '0'; // Inizia da zero
     animateCount(element, targetValue);
   });
+
+
+
+  
 });

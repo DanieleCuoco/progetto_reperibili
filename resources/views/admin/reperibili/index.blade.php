@@ -198,16 +198,16 @@
                             <a href="{{ route('admin.reperibili.show', $reperibile) }}" class="btn-view">
                                 <i class="bi bi-eye"></i> Visualizza
                             </a>
-                            <a href="{{ route('admin.reperibili.edit', $reperibile) }}" class="btn-edit">
-                                <i class="bi bi-pencil"></i> Modifica
-                            </a>
-                            <form action="{{ route('admin.reperibili.destroy', $reperibile) }}" method="POST" onsubmit="return confirm('Sei sicuro di voler eliminare questo reperibile?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn-delete">
-                                    <i class="bi bi-trash"></i> Elimina
-                                </button>
-                            </form>
+                            <a href="{{ route('admin.reperibili.edit', $reperibile->id) }}" class="btn-edit">
+    <i class="bi bi-pencil"></i> Modifica
+</a>
+                           <form action="{{ route('admin.reperibili.delete', $reperibile->id) }}" method="POST" class="delete-form">
+    @csrf
+    @method('DELETE')
+    <button type="submit" class="btn-delete">
+        <i class="bi bi-trash"></i> Elimina
+    </button>
+</form>
                         </td>
                     </tr>
                     @empty

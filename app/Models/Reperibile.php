@@ -11,6 +11,9 @@ class Reperibile extends Authenticatable
 
     // Aggiungi questa riga per specificare il nome corretto della tabella
     protected $table = 'reperibiles';
+    
+    // Aggiungi questa riga per abilitare i timestamp
+    public $timestamps = true;
 
     protected $fillable = [
         'username',
@@ -36,5 +39,11 @@ class Reperibile extends Authenticatable
     public function turni()
     {
         return $this->hasMany(TurnoReperibilita::class);
+    }
+    
+    // Specifica quale campo usare per il route model binding
+    public function getRouteKeyName()
+    {
+        return 'id';
     }
 }

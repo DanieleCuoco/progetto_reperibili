@@ -165,18 +165,18 @@
             
             <div class="detail-group">
                 <div class="detail-label">Data Creazione</div>
-                <div class="detail-value">{{ $reperibile->created_at->format('d/m/Y H:i') }}</div>
+                <div class="detail-value">{{ $reperibile->created_at ? $reperibile->created_at->format('d/m/Y H:i') : 'Non disponibile' }}</div>
             </div>
             
             <div class="detail-group">
                 <div class="detail-label">Ultimo Aggiornamento</div>
-                <div class="detail-value">{{ $reperibile->updated_at->format('d/m/Y H:i') }}</div>
+                <div class="detail-value">{{ $reperibile->updated_at ? $reperibile->updated_at->format('d/m/Y H:i') : 'Non disponibile' }}</div>
             </div>
             
             <div class="btn-group">
-                <a href="{{ route('admin.reperibili.edit', $reperibile) }}" class="btn-edit">
-                    <i class="bi bi-pencil"></i> Modifica
-                </a>
+               <a href="{{ route('admin.reperibili.edit', ['reperibile' => $reperibile->id]) }}" class="btn-edit">
+                <i class="bi bi-pencil"></i> Modifica
+            </a>
                 <a href="{{ route('admin.reperibili.index') }}" class="btn-back">
                     <i class="bi bi-arrow-left"></i> Torna alla lista
                 </a>

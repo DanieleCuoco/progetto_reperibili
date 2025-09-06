@@ -262,3 +262,244 @@ select:focus {
     transform: translateY(-2px);
     box-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
 }
+
+/* Stili per la sezione reperibili affiliati */
+.reperibili-section {
+    background-color: #1a1a1a;
+    border-radius: 16px;
+    padding: 35px;
+    margin-top: 35px;
+    box-shadow: 0 0 15px rgba(0, 191, 255, 0.4);
+    border-top: 3px solid #00bfff;
+}
+
+.reperibili-section h4 {
+    color: #00bfff;
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 15px;
+}
+
+.reperibili-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.reperibile-card {
+    background: linear-gradient(145deg, #222, #2a2a2a);
+    border-radius: 40px;
+    padding: 20px;
+    transition: all 0.3s ease;
+    border-left: 4px solid #00bfff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.reperibile-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4), 0 0 15px rgba(0, 191, 255, 0.5);
+    border-left: 4px solid #00ffff;
+}
+
+.reperibile-info {
+    margin-bottom: 20px;
+}
+
+.reperibile-field {
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.reperibile-label {
+    color: #00bfff;
+    font-weight: bold;
+    font-size: 0.9em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.reperibile-value {
+    color: #fff;
+    font-size: 1.1em;
+    padding: 5px 0;
+    border-bottom: 1px dotted #333;
+}
+
+.reperibile-actions {
+    text-align: right;
+    margin-top: 20px;
+}
+
+.reperibile-actions .btn-view {
+    background: linear-gradient(145deg, #2c3e50, #34495e);
+    color: white;
+    padding: 10px 18px;
+    border-radius: 30px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    border: none;
+}
+
+.reperibile-actions .btn-view:hover {
+    background: linear-gradient(145deg, #34495e, #2c3e50);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3), 0 0 10px rgba(255, 215, 0, 0.6);
+}
+
+.empty-reperibili {
+    background: linear-gradient(145deg, #222, #2a2a2a);
+    border-radius: 12px;
+    padding: 30px;
+    text-align: center;
+    color: #aaa;
+}
+
+.empty-reperibili i {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    display: block;
+    color: #555;
+}
+
+/* Miglioramento bottoni footer */
+.detail-footer {
+    display: flex;
+    gap: 20px;
+    margin-top: 40px;
+    padding-top: 25px;
+    border-top: 1px solid #333;
+}
+
+.btn-edit, .btn-back {
+    padding: 12px 24px;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.btn-edit {
+    background: linear-gradient(145deg, #2980b9, #3498db);
+    color: white;
+}
+
+.btn-back {
+    background: linear-gradient(145deg, #6c7a89, #7f8c8d);
+    color: white;
+}
+
+.btn-edit:hover, .btn-back:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3), 0 0 10px rgba(255, 215, 0, 0.6);
+}
+
+.btn-edit:hover {
+    background: linear-gradient(145deg, #3498db, #2980b9);
+}
+
+.btn-back:hover {
+    background: linear-gradient(145deg, #7f8c8d, #6c7a89);
+}
+
+/* Stili migliorati per l'intestazione dei dettagli del reparto */
+.detail-container {
+    background-color: #1a1a1a;
+    border-radius: 12px;
+    padding: 30px;
+    margin-top: 25px;
+    box-shadow: 0 5px 20px rgba(0, 191, 255, 0.25);
+    border-top: 3px solid #00bfff;
+}
+
+.detail-card {
+    position: relative;
+}
+
+.detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #333;
+}
+
+.detail-header h3 {
+    color: #fff;
+    font-size: 1.8rem;
+    font-weight: 600;
+    text-shadow: 0 0 10px rgba(0, 191, 255, 0.3);
+    letter-spacing: 1px;
+}
+
+.detail-status {
+    padding: 6px 12px;
+    border-radius: 30px;
+    font-size: 0.9em;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.status-active {
+    background: linear-gradient(145deg, #27ae60, #2ecc71);
+    color: white;
+}
+
+.status-inactive {
+    background: linear-gradient(145deg, #7f8c8d, #95a5a6);
+    color: white;
+}
+
+.detail-body {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 15px;
+    background-color: #222;
+    border-radius: 8px;
+    border-left: 3px solid #00bfff;
+    transition: all 0.3s ease;
+}
+
+.detail-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    background-color: #2a2a2a;
+}
+
+.detail-label {
+    color: #00bfff;
+    font-weight: bold;
+    font-size: 0.9em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.detail-value {
+    color: #fff;
+    font-size: 1.1em;
+    padding: 5px 0;
+    border-bottom: 1px dotted #333;
+}

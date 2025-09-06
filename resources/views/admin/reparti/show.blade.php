@@ -76,6 +76,46 @@
                     </div>
                 </div>
                 
+                <!-- Sezione Reperibili Affiliati -->
+                <div class="reperibili-section">
+                    <h4>
+                        <i class="bi bi-people-fill"></i> Reperibili Affiliati
+                    </h4>
+                    
+                    @if($reparto->reperibili->count() > 0)
+                        <div class="reperibili-grid">
+                            @foreach($reparto->reperibili as $reperibile)
+                                <div class="reperibile-card">
+                                    <div class="reperibile-info">
+                                        <div class="reperibile-field">
+                                            <span class="reperibile-label">Nome:</span> 
+                                            <span class="reperibile-value">{{ $reperibile->name }}</span>
+                                        </div>
+                                        <div class="reperibile-field">
+                                            <span class="reperibile-label">Email:</span> 
+                                            <span class="reperibile-value">{{ $reperibile->email }}</span>
+                                        </div>
+                                        <div class="reperibile-field">
+                                            <span class="reperibile-label">Telefono:</span> 
+                                            <span class="reperibile-value">{{ $reperibile->phone ?: 'Nessun telefono' }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="reperibile-actions">
+                                        <a href="{{ route('admin.reperibili.show', $reperibile) }}" class="btn-view">
+                                            <i class="bi bi-eye"></i> Visualizza
+                                        </a>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <div class="empty-reperibili">
+                            <i class="bi bi-info-circle"></i>
+                            <p>Nessun reperibile associato a questo reparto.</p>
+                        </div>
+                    @endif
+                </div>
+                
                 <div class="detail-footer">
                     <a href="{{ route('admin.reparti.edit', $reparto) }}" class="btn-edit">
                         <i class="bi bi-pencil"></i> Modifica

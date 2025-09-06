@@ -62,6 +62,9 @@ class RepartoController extends Controller
      */
     public function show(Reparto $reparto)
     {
+        // Carica i reperibili associati a questo reparto
+        $reparto->load('reperibili');
+        
         return view('admin.reparti.show', compact('reparto'));
     }
 

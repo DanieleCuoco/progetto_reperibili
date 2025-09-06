@@ -24,7 +24,10 @@ class ReperibileController extends Controller
      */
     public function create()
     {
-        return view('admin.reperibili.create');
+        // Ottieni tutti i reparti attivi
+        $reparti = \App\Models\Reparto::where('is_active', true)->get();
+        
+        return view('admin.reperibili.create', compact('reparti'));
     }
 
     /**
@@ -64,7 +67,10 @@ class ReperibileController extends Controller
      */
     public function edit(Reperibile $reperibile)
     {
-        return view('admin.reperibili.edit', compact('reperibile'));
+        // Ottieni tutti i reparti attivi
+        $reparti = \App\Models\Reparto::where('is_active', true)->get();
+        
+        return view('admin.reperibili.edit', compact('reperibile', 'reparti'));
     }
 
     /**
@@ -118,4 +124,58 @@ class ReperibileController extends Controller
                 ->with('error', 'Errore durante l\'eliminazione del reperibile: ' . $e->getMessage());
         }
     }
+
+// public function deleteReperibile($id)
+// {
+//     try {
+//         // Elimina prima tutti i turni associati
+//         $turniEliminati = DB::delete('DELETE FROM turni_reperibilita WHERE reperibile_id = ?', [$id]);
+        
+//         // Poi elimina il reperibile
+//         $reperibileCancellato = DB::delete('DELETE FROM reperibiles WHERE id = ?', [$id]);
+        
+//         if ($reperibileCancellato) {
+//             return redirect()->route('admin.reperibili.index')
+//                 ->with('success', 'Reperibile eliminato con successo');
+//         } else {
+//             return redirect()->route('admin.reperibili.index')
+//                 ->with('error', 'Impossibile eliminare il reperibile');
+//         }
+//     } catch (\Exception $e) {
+//         return redirect()->route('admin.reperibili.index')
+//             ->with('error', 'Errore durante l\'eliminazione del reperibile: ' . $e->getMessage());
+//     }
+// }
+
+
+public function deleteReperibile($id)
+{
+    try {
+        // Validazione dell'input
+        $id = (int)$id; // Forza la conversione a intero
+        
+        // Elimina prima tutti i turni associati
+        $turniEliminati = DB::table('turni_reperibilita')
+            ->where('reperibile_id', $id)
+            ->delete();
+        
+        // Poi elimina il reperibile
+        $reperibileCancellato = DB::table('reperibiles')
+            ->where('id', $id)
+            ->delete();
+        
+        if ($reperibileCancellato) {
+            return redirect()->route('admin.reperibili.index')
+                ->with('success', 'Reperibile eliminato con successo');
+        } else {
+            return redirect()->route('admin.reperibili.index')
+                ->with('error', 'Impossibile eliminare il reperibile');
+        }
+    } catch (\Exception $e) {
+        return redirect()->route('admin.reperibili.index')
+            ->with('error', 'Errore durante l\'eliminazione del reperibile: ' . $e->getMessage());
+    }
+}
+
+    
 }

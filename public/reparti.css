@@ -292,3 +292,65 @@
 .icon-monitoring {
     color: #72c02c; /* Verde */
 }
+
+
+/* Stili per la sezione reperibili affiliati */
+.reperibili-section {
+    margin-top: 20px;
+    border-top: 1px solid #444;
+    padding-top: 20px;
+}
+
+.reperibili-section h4 {
+    color: #00bfff;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.reperibili-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.reperibile-item {
+    background-color: #2a2a2a;
+    border-radius: 6px;
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.reperibile-item:hover {
+    background-color: #333;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.reperibile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.reperibile-name {
+    font-weight: bold;
+    color: #fff;
+}
+
+.reperibile-email, .reperibile-phone {
+    font-size: 0.9em;
+    color: #aaa;
+}
+
+.empty-state {
+    background-color: #2a2a2a;
+    border-radius: 6px;
+    padding: 15px;
+    text-align: center;
+    color: #aaa;
+}

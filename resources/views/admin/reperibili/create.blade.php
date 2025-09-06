@@ -184,7 +184,14 @@
 
                 <div class="form-group">
                     <label for="department">Reparto</label>
-                    <input type="text" id="department" name="department" value="{{ old('department') }}" required>
+                    <select id="department" name="department" required>
+                        <option value="">Seleziona un reparto</option>
+                        @foreach($reparti as $reparto)
+                            <option value="{{ $reparto->codice }}" {{ old('department') == $reparto->codice ? 'selected' : '' }}>
+                                {{ $reparto->nome }} ({{ $reparto->codice }})
+                            </option>
+                        @endforeach
+                    </select>
                     @error('department')
                     <div class="error-message">{{ $message }}</div>
                     @enderror

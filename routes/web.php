@@ -20,8 +20,9 @@ Route::prefix('admin')->name('admin.')->group(function() {
         Route::get('dashboard', [AdminAuthController::class, 'index'])->name('dashboard');
         Route::post('logout', [AdminAuthController::class,'logout'])->name('logout');
 
-        Route::resource('reperibili', ReperibileController::class);
-       Route::resource('reparti', RepartoController::class)->parameters(['reparti' => 'reparto']);
+        Route::resource('reperibili', ReperibileController::class)->parameters(['reperibili' => 'reperibile']);
+        Route::delete('reperibili/delete/{id}', [ReperibileController::class, 'deleteReperibile'])->name('reperibili.delete');
+        Route::resource('reparti', RepartoController::class)->parameters(['reparti' => 'reparto']);
     });
 });
 
