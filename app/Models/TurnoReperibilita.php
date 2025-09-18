@@ -13,6 +13,7 @@ class TurnoReperibilita extends Model
     
     protected $fillable = [
         'reperibile_id',
+        'reparto_id',
         'data_inizio',
         'data_fine',
         'ora_inizio',
@@ -26,5 +27,11 @@ class TurnoReperibilita extends Model
     public function reperibile()
     {
         return $this->belongsTo(Reperibile::class);
+    }
+    
+    // Relazione con il reparto
+    public function reparto()
+    {
+        return $this->belongsTo(Reparto::class);
     }
 }

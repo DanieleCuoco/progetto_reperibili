@@ -7,8 +7,8 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <!-- Aggiungi questo meta tag per forzare il refresh ogni 5 minuti -->
-    <meta http-equiv="refresh" content="300">
+    <!-- Ridotto il tempo di refresh da 5 minuti a 2 minuti -->
+    <meta http-equiv="refresh" content="120">
     <title>Calendario Reperibili - {{ time() }}</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -56,7 +56,7 @@
                 <div class="days">
                     @foreach($calendar['days'] as $day)
                         <div class="day {{ $day['isToday'] ? 'today' : '' }}" 
-                             @if($day['day']) onclick="showDayDetails('{{ $day['date'] }}', {{ json_encode($day['turni']) }})" @endif>
+                             @if($day['day']) data-date="{{ $day['date'] }}" data-turni="{{ json_encode($day['turni']) }}" @endif>
                             <span class="day-number">{{ $day['day'] }}</span>
                         </div>
                     @endforeach

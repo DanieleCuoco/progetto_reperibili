@@ -24,8 +24,8 @@ class UserController extends Controller
         // Gestione navigazione tra i mesi
         $month = $request->query('month');
         
-        // Forza il refresh della data corrente ogni volta
-        $currentMonth = Carbon::now();
+        // Forza il refresh della data corrente ogni volta - IMPORTANTE: disabilita completamente la cache
+        $currentMonth = Carbon::now()->setTimezone('Europe/Rome');
         
         if ($month === 'prev') {
             $currentMonth = $currentMonth->subMonth();
@@ -59,8 +59,8 @@ class UserController extends Controller
             ];
         }
         
-        // Ottieni la data di oggi per confronto esplicito
-        $today = Carbon::now()->format('Y-m-d');
+        // Ottieni la data di oggi per confronto esplicito - IMPORTANTE: disabilita completamente la cache
+        $today = Carbon::now()->setTimezone('Europe/Rome')->format('Y-m-d');
         
         // Ottieni il reparto selezionato dal filtro
         $selectedDepartment = $request->query('department');
@@ -79,7 +79,7 @@ class UserController extends Controller
                           ->where('data_fine', '>=', $endDate);
                     });
             })
-            ->with('reperibile');
+            ->with(['reperibile', 'reperibile.reparto']);
         
         // Applica il filtro per reparto se selezionato
         if ($selectedDepartment) {

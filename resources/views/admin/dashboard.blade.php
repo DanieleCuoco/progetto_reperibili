@@ -62,7 +62,7 @@
                 <div class="card-icon"><i class="bi bi-check2-square"></i></div>
                 <h2>Gestione Modifiche</h2>
                 <p>Approva o rifiuta le richieste di modifica, gestisci le notifiche e i cambiamenti.</p>
-                <a href="#" class="card-link"><i class="bi bi-arrow-right-circle"></i> Accedi</a>
+                <a href="{{ route('admin.modifiche.index') }}" class="card-link"><i class="bi bi-arrow-right-circle"></i> Accedi</a>
             </div>
         </div>
 

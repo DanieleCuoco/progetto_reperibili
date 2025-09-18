@@ -18,20 +18,20 @@ function refreshAtMidnight() {
         window.location.href = window.location.pathname + '?nocache=' + new Date().getTime();
     }, msToMidnight);
     
-    // Imposta anche un backup per ricaricare ogni 15 minuti
+    // Imposta anche un backup per ricaricare ogni 5 minuti (ridotto da 15 a 5)
     setInterval(function() {
-        console.log('Ricarico la pagina (backup ogni 15 minuti)');
-        window.location.reload(true);
-    }, 900000); // 15 minuti in millisecondi
+        console.log('Ricarico la pagina (backup ogni 5 minuti)');
+        window.location.href = window.location.pathname + '?nocache=' + new Date().getTime();
+    }, 300000); // 5 minuti in millisecondi
     
-    // Verifica ogni minuto se la data è cambiata
+    // Verifica ogni 30 secondi se la data è cambiata (ridotto da 1 minuto a 30 secondi)
     setInterval(function() {
         var checkNow = new Date();
         if (checkNow.getDate() !== currentDate) {
             console.log('La data è cambiata! Ricarico immediatamente');
-            window.location.reload(true);
+            window.location.href = window.location.pathname + '?nocache=' + new Date().getTime();
         }
-    }, 60000); // 1 minuto in millisecondi
+    }, 30000); // 30 secondi in millisecondi
 }
 
 // Funzione per mostrare i dettagli del giorno nel modal
@@ -82,4 +82,15 @@ function showDayDetails(date, turni) {
 }
 
 // Esegui la funzione quando la pagina è caricata
-document.addEventListener('DOMContentLoaded', refreshAtMidnight);
+document.addEventListener('DOMContentLoaded', function() {
+    refreshAtMidnight();
+    
+    // Aggiungi event listener per i giorni del calendario
+    document.querySelectorAll('.day[data-date]').forEach(function(dayElement) {
+        dayElement.addEventListener('click', function() {
+            const date = this.getAttribute('data-date');
+            const turni = JSON.parse(this.getAttribute('data-turni'));
+            showDayDetails(date, turni);
+        });
+    });
+});

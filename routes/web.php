@@ -7,12 +7,14 @@ use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\ReperibileController;
 use App\Http\Controllers\ReperibileAuthController;
 use App\Http\Controllers\TurnoReperibilitaController;
+use App\Http\Controllers\ModificheController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 
+// All'interno del gruppo middleware auth:admin
 Route::prefix('admin')->name('admin.')->group(function() {
     Route::get('login', [AdminAuthController::class,'showLoginForm'])->name('login');
     Route::post('login', [AdminAuthController::class,'login']);
@@ -23,6 +25,11 @@ Route::prefix('admin')->name('admin.')->group(function() {
         Route::resource('reperibili', ReperibileController::class)->parameters(['reperibili' => 'reperibile']);
         Route::delete('reperibili/delete/{id}', [ReperibileController::class, 'deleteReperibile'])->name('reperibili.delete');
         Route::resource('reparti', RepartoController::class)->parameters(['reparti' => 'reparto']);
+        
+        // Nuova rotta per la gestione modifiche
+        Route::get('modifiche', [ModificheController::class, 'index'])->name('modifiche.index');
+        Route::post('modifiche/approva/{id}', [ModificheController::class, 'approva'])->name('modifiche.approva');
+        Route::post('modifiche/rifiuta/{id}', [ModificheController::class, 'rifiuta'])->name('modifiche.rifiuta');
     });
 });
 
