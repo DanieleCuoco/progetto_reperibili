@@ -4,11 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\TurnoReperibilita;
+use Illuminate\Support\Facades\Auth;
 
 class ModificheController extends Controller
 {
     public function index()
     {
+        // Controllo autenticazione admin
+        if (!Auth::guard('admin')->check()) {
+            return redirect()->route('admin.login');
+        }
+        
         // Recupera tutti i turni in attesa di approvazione con reperibile e reparto
         $turniPendenti = TurnoReperibilita::where('is_approved', 0)
                                          ->with(['reperibile.reparto'])
@@ -29,7 +35,11 @@ class ModificheController extends Controller
             return $turno->status === 'cancellazione';
         });
         
-        return view('admin.modifiche.index', compact('nuoviTurni', 'modificheTurni', 'cancellazioniTurni'));
+        return response()
+            ->view('admin.modifiche.index', compact('nuoviTurni', 'modificheTurni', 'cancellazioniTurni'))
+            ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+            ->header('Pragma', 'no-cache')
+            ->header('Expires', '0');
     }
     
     public function approva($id)

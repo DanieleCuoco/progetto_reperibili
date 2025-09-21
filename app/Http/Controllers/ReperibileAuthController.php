@@ -33,24 +33,31 @@ class ReperibileAuthController extends Controller
         ]);
     }
 
-    
-
     public function dashboard()
-{
-    $reperibile = Auth::guard('reperibile')->user();
-    
-    if (!$reperibile) {
-        return redirect()->route('reperibile.login');
+    {
+        // Controllo autenticazione reperibile
+        $reperibile = Auth::guard('reperibile')->user();
+        
+        if (!$reperibile) {
+            return redirect()->route('reperibile.login');
+        }
+        
+        return response()
+            ->view('reperibile.dashboard', compact('reperibile'))
+            ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+            ->header('Pragma', 'no-cache')
+            ->header('Expires', '0');
     }
-    
-    return view('reperibile.dashboard', compact('reperibile'));
-}
     
     public function logout(Request $request)
     {
         Auth::guard('reperibile')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/');
+        
+        return redirect()->route('reperibile.login')
+            ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+            ->header('Pragma', 'no-cache')
+            ->header('Expires', '0');
     }
 }

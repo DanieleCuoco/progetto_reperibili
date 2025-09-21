@@ -10,6 +10,13 @@ class TurnoReperibilitaController extends Controller
 {
     public function store(Request $request)
     {
+        // Controllo autenticazione reperibile
+        $reperibile = Auth::guard('reperibile')->user();
+        
+        if (!$reperibile) {
+            return redirect('/reperibile/login');
+        }
+        
         $request->validate([
             'data_inizio' => 'required|date',
             'data_fine' => 'required|date|after_or_equal:data_inizio',
@@ -17,8 +24,6 @@ class TurnoReperibilitaController extends Controller
             'ora_fine' => 'required',
             'note' => 'nullable|string',
         ]);
-        
-        $reperibile = Auth::guard('reperibile')->user();
         
         TurnoReperibilita::create([
             'reperibile_id' => $reperibile->id,
@@ -30,6 +35,10 @@ class TurnoReperibilitaController extends Controller
             'is_approved' => false, // Imposta a false di default
         ]);
         
-        return redirect()->back()->with('success', 'Turno di reperibilità inserito con successo! Sarà visibile nel calendario dopo l\'approvazione dell\'amministratore.');
+        return redirect()->back()
+            ->with('success', 'Turno di reperibilità inserito con successo! Sarà visibile nel calendario dopo l\'approvazione dell\'amministratore.')
+            ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+            ->header('Pragma', 'no-cache')
+            ->header('Expires', '0');
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Reparto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RepartoController extends Controller
 {
@@ -12,8 +13,18 @@ class RepartoController extends Controller
      */
     public function index()
     {
+        // Controllo autenticazione admin
+        if (!Auth::guard('admin')->check()) {
+            return redirect()->route('admin.login');
+        }
+        
         $reparti = Reparto::all();
-        return view('admin.reparti.index', compact('reparti'));
+        
+        return response()
+            ->view('admin.reparti.index', compact('reparti'))
+            ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+            ->header('Pragma', 'no-cache')
+            ->header('Expires', '0');
     }
 
     /**
@@ -21,8 +32,18 @@ class RepartoController extends Controller
      */
     public function create()
     {
+        // Controllo autenticazione admin
+        if (!Auth::guard('admin')->check()) {
+            return redirect()->route('admin.login');
+        }
+        
         $icons = config('icons.reparti');
-        return view('admin.reparti.create', compact('icons'));
+        
+        return response()
+            ->view('admin.reparti.create', compact('icons'))
+            ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+            ->header('Pragma', 'no-cache')
+            ->header('Expires', '0');
     }
 
     /**
@@ -30,6 +51,11 @@ class RepartoController extends Controller
      */
     public function store(Request $request)
     {
+        // Controllo autenticazione admin
+        if (!Auth::guard('admin')->check()) {
+            return redirect()->route('admin.login');
+        }
+        
         $validated = $request->validate([
             'nome' => 'required|unique:repartos',
             'descrizione' => 'nullable',
@@ -54,7 +80,10 @@ class RepartoController extends Controller
         Reparto::create($validated);
 
         return redirect()->route('admin.reparti.index')
-            ->with('success', 'Reparto creato con successo');
+            ->with('success', 'Reparto creato con successo')
+            ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+            ->header('Pragma', 'no-cache')
+            ->header('Expires', '0');
     }
 
     /**
@@ -62,10 +91,19 @@ class RepartoController extends Controller
      */
     public function show(Reparto $reparto)
     {
+        // Controllo autenticazione admin
+        if (!Auth::guard('admin')->check()) {
+            return redirect()->route('admin.login');
+        }
+        
         // Carica i reperibili associati a questo reparto
         $reparto->load('reperibili');
         
-        return view('admin.reparti.show', compact('reparto'));
+        return response()
+            ->view('admin.reparti.show', compact('reparto'))
+            ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+            ->header('Pragma', 'no-cache')
+            ->header('Expires', '0');
     }
 
     /**
@@ -73,6 +111,11 @@ class RepartoController extends Controller
      */
     public function edit(Reparto $reparto)
     {
+        // Controllo autenticazione admin
+        if (!Auth::guard('admin')->check()) {
+            return redirect()->route('admin.login');
+        }
+        
         $icons = config('icons.reparti');
         
         // Recuperiamo l'icona salvata nella sessione, se esiste
@@ -81,7 +124,11 @@ class RepartoController extends Controller
             'class' => 'icon-default'
         ]);
         
-        return view('admin.reparti.edit', compact('reparto', 'icons', 'selectedIcon'));
+        return response()
+            ->view('admin.reparti.edit', compact('reparto', 'icons', 'selectedIcon'))
+            ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+            ->header('Pragma', 'no-cache')
+            ->header('Expires', '0');
     }
 
     /**
@@ -89,6 +136,11 @@ class RepartoController extends Controller
      */
     public function update(Request $request, Reparto $reparto)
     {
+        // Controllo autenticazione admin
+        if (!Auth::guard('admin')->check()) {
+            return redirect()->route('admin.login');
+        }
+        
         $validated = $request->validate([
             'nome' => 'required|unique:repartos,nome,' . $reparto->id,
             'descrizione' => 'nullable',
@@ -118,30 +170,47 @@ class RepartoController extends Controller
         $reparto->update($validated);
 
         return redirect()->route('admin.reparti.index')
-            ->with('success', 'Reparto aggiornato con successo');
+            ->with('success', 'Reparto aggiornato con successo')
+            ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+            ->header('Pragma', 'no-cache')
+            ->header('Expires', '0');
     }
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Reparto $reparto)
-{
-    // Verifica se ci sono reperibili associati
-    if ($reparto->reperibili()->count() > 0) {
-        return redirect()->route('admin.reparti.index')
-            ->with('error', 'Impossibile eliminare il reparto: ci sono reperibili associati');
+    {
+        // Controllo autenticazione admin
+        if (!Auth::guard('admin')->check()) {
+            return redirect()->route('admin.login');
+        }
+        
+        // Verifica se ci sono reperibili associati
+        if ($reparto->reperibili()->count() > 0) {
+            return redirect()->route('admin.reparti.index')
+                ->with('error', 'Impossibile eliminare il reparto: ci sono reperibili associati')
+                ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+                ->header('Pragma', 'no-cache')
+                ->header('Expires', '0');
+        }
+        
+        // Rimuoviamo l'icona dalla sessione
+        session()->forget('icon_' . $reparto->codice);
+        
+        try {
+            $reparto->delete();
+            return redirect()->route('admin.reparti.index')
+                ->with('success', 'Reparto eliminato con successo')
+                ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+                ->header('Pragma', 'no-cache')
+                ->header('Expires', '0');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.reparti.index')
+                ->with('error', 'Errore durante l\'eliminazione del reparto: ' . $e->getMessage())
+                ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+                ->header('Pragma', 'no-cache')
+                ->header('Expires', '0');
+        }
     }
-    
-    // Rimuoviamo l'icona dalla sessione
-    session()->forget('icon_' . $reparto->codice);
-    
-    try {
-        $reparto->delete();
-        return redirect()->route('admin.reparti.index')
-            ->with('success', 'Reparto eliminato con successo');
-    } catch (\Exception $e) {
-        return redirect()->route('admin.reparti.index')
-            ->with('error', 'Errore durante l\'eliminazione del reparto: ' . $e->getMessage());
-    }
-}
 }

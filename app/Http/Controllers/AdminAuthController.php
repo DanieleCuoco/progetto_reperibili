@@ -13,6 +13,11 @@ class AdminAuthController extends Controller {
     }
 
     public function index() {
+        // Controllo esplicito dell'autenticazione - QUESTA È LA RIGA CHE RISOLVE TUTTO
+        if (!Auth::guard('admin')->check()) {
+            return redirect()->route('admin.login');
+        }
+        
         // Conta i reperibili attivi
         $reperibili_attivi = Reperibile::where('is_active', true)->count();
         
@@ -22,7 +27,11 @@ class AdminAuthController extends Controller {
         // Modifiche in attesa (per ora lasciamo 0 come placeholder)
         $modifiche_in_attesa = 0;
         
-        return view('admin.dashboard', compact('reperibili_attivi', 'reparti', 'modifiche_in_attesa'));
+        return response()
+            ->view('admin.dashboard', compact('reperibili_attivi', 'reparti', 'modifiche_in_attesa'))
+            ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+            ->header('Pragma', 'no-cache')
+            ->header('Expires', '0');
     }
 
     public function login(Request $request) {
@@ -45,6 +54,10 @@ class AdminAuthController extends Controller {
         Auth::guard('admin')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect(route('admin.login'));
+        
+        return redirect(route('admin.login'))
+            ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+            ->header('Pragma', 'no-cache')
+            ->header('Expires', '0');
     }
 }

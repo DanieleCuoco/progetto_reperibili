@@ -7,6 +7,7 @@ use App\Models\TurnoReperibilita;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class ReperibileController extends Controller
 {
@@ -15,8 +16,18 @@ class ReperibileController extends Controller
      */
     public function index()
     {
+        // Controllo autenticazione admin
+        if (!Auth::guard('admin')->check()) {
+            return redirect()->route('admin.login');
+        }
+        
         $reperibili = Reperibile::all();
-        return view('admin.reperibili.index', compact('reperibili'));
+        
+        return response()
+            ->view('admin.reperibili.index', compact('reperibili'))
+            ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+            ->header('Pragma', 'no-cache')
+            ->header('Expires', '0');
     }
 
     /**
@@ -24,10 +35,19 @@ class ReperibileController extends Controller
      */
     public function create()
     {
+        // Controllo autenticazione admin
+        if (!Auth::guard('admin')->check()) {
+            return redirect()->route('admin.login');
+        }
+        
         // Ottieni tutti i reparti attivi
         $reparti = \App\Models\Reparto::where('is_active', true)->get();
         
-        return view('admin.reperibili.create', compact('reparti'));
+        return response()
+            ->view('admin.reperibili.create', compact('reparti'))
+            ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+            ->header('Pragma', 'no-cache')
+            ->header('Expires', '0');
     }
 
     /**
@@ -35,6 +55,11 @@ class ReperibileController extends Controller
      */
     public function store(Request $request)
     {
+        // Controllo autenticazione admin
+        if (!Auth::guard('admin')->check()) {
+            return redirect()->route('admin.login');
+        }
+        
         $validated = $request->validate([
             'username' => 'required|unique:reperibiles',
             'password' => 'required|min:6',
@@ -51,7 +76,10 @@ class ReperibileController extends Controller
         Reperibile::create($validated);
 
         return redirect()->route('admin.reperibili.index')
-            ->with('success', 'Reperibile creato con successo');
+            ->with('success', 'Reperibile creato con successo')
+            ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+            ->header('Pragma', 'no-cache')
+            ->header('Expires', '0');
     }
 
     /**
@@ -59,7 +87,16 @@ class ReperibileController extends Controller
      */
     public function show(Reperibile $reperibile)
     {
-        return view('admin.reperibili.show', compact('reperibile'));
+        // Controllo autenticazione admin
+        if (!Auth::guard('admin')->check()) {
+            return redirect()->route('admin.login');
+        }
+        
+        return response()
+            ->view('admin.reperibili.show', compact('reperibile'))
+            ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+            ->header('Pragma', 'no-cache')
+            ->header('Expires', '0');
     }
 
     /**
@@ -67,10 +104,19 @@ class ReperibileController extends Controller
      */
     public function edit(Reperibile $reperibile)
     {
+        // Controllo autenticazione admin
+        if (!Auth::guard('admin')->check()) {
+            return redirect()->route('admin.login');
+        }
+        
         // Ottieni tutti i reparti attivi
         $reparti = \App\Models\Reparto::where('is_active', true)->get();
         
-        return view('admin.reperibili.edit', compact('reperibile', 'reparti'));
+        return response()
+            ->view('admin.reperibili.edit', compact('reperibile', 'reparti'))
+            ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+            ->header('Pragma', 'no-cache')
+            ->header('Expires', '0');
     }
 
     /**
@@ -78,6 +124,11 @@ class ReperibileController extends Controller
      */
     public function update(Request $request, Reperibile $reperibile)
     {
+        // Controllo autenticazione admin
+        if (!Auth::guard('admin')->check()) {
+            return redirect()->route('admin.login');
+        }
+        
         $validated = $request->validate([
             'username' => 'required|unique:reperibiles,username,' . $reperibile->id,
             'password' => 'nullable|min:6',
@@ -99,7 +150,10 @@ class ReperibileController extends Controller
         $reperibile->update($validated);
 
         return redirect()->route('admin.reperibili.index')
-            ->with('success', 'Reperibile aggiornato con successo');
+            ->with('success', 'Reperibile aggiornato con successo')
+            ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+            ->header('Pragma', 'no-cache')
+            ->header('Expires', '0');
     }
 
     /**
@@ -107,6 +161,11 @@ class ReperibileController extends Controller
      */
     public function destroy(Reperibile $reperibile)
     {
+        // Controllo autenticazione admin
+        if (!Auth::guard('admin')->check()) {
+            return redirect()->route('admin.login');
+        }
+        
         try {
             // Ottieni l'ID del reperibile prima di eliminarlo
             $id = $reperibile->id;
@@ -118,64 +177,59 @@ class ReperibileController extends Controller
             DB::table('reperibiles')->where('id', $id)->delete();
             
             return redirect()->route('admin.reperibili.index')
-                ->with('success', 'Reperibile eliminato con successo');
+                ->with('success', 'Reperibile eliminato con successo')
+                ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+                ->header('Pragma', 'no-cache')
+                ->header('Expires', '0');
         } catch (\Exception $e) {
             return redirect()->route('admin.reperibili.index')
-                ->with('error', 'Errore durante l\'eliminazione del reperibile: ' . $e->getMessage());
+                ->with('error', 'Errore durante l\'eliminazione del reperibile: ' . $e->getMessage())
+                ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+                ->header('Pragma', 'no-cache')
+                ->header('Expires', '0');
         }
     }
 
-// public function deleteReperibile($id)
-// {
-//     try {
-//         // Elimina prima tutti i turni associati
-//         $turniEliminati = DB::delete('DELETE FROM turni_reperibilita WHERE reperibile_id = ?', [$id]);
-        
-//         // Poi elimina il reperibile
-//         $reperibileCancellato = DB::delete('DELETE FROM reperibiles WHERE id = ?', [$id]);
-        
-//         if ($reperibileCancellato) {
-//             return redirect()->route('admin.reperibili.index')
-//                 ->with('success', 'Reperibile eliminato con successo');
-//         } else {
-//             return redirect()->route('admin.reperibili.index')
-//                 ->with('error', 'Impossibile eliminare il reperibile');
-//         }
-//     } catch (\Exception $e) {
-//         return redirect()->route('admin.reperibili.index')
-//             ->with('error', 'Errore durante l\'eliminazione del reperibile: ' . $e->getMessage());
-//     }
-// }
-
-
-public function deleteReperibile($id)
-{
-    try {
-        // Validazione dell'input
-        $id = (int)$id; // Forza la conversione a intero
-        
-        // Elimina prima tutti i turni associati
-        $turniEliminati = DB::table('turni_reperibilita')
-            ->where('reperibile_id', $id)
-            ->delete();
-        
-        // Poi elimina il reperibile
-        $reperibileCancellato = DB::table('reperibiles')
-            ->where('id', $id)
-            ->delete();
-        
-        if ($reperibileCancellato) {
-            return redirect()->route('admin.reperibili.index')
-                ->with('success', 'Reperibile eliminato con successo');
-        } else {
-            return redirect()->route('admin.reperibili.index')
-                ->with('error', 'Impossibile eliminare il reperibile');
+    public function deleteReperibile($id)
+    {
+        // Controllo autenticazione admin
+        if (!Auth::guard('admin')->check()) {
+            return redirect()->route('admin.login');
         }
-    } catch (\Exception $e) {
-        return redirect()->route('admin.reperibili.index')
-            ->with('error', 'Errore durante l\'eliminazione del reperibile: ' . $e->getMessage());
+        
+        try {
+            // Validazione dell'input
+            $id = (int)$id; // Forza la conversione a intero
+            
+            // Elimina prima tutti i turni associati
+            $turniEliminati = DB::table('turni_reperibilita')
+                ->where('reperibile_id', $id)
+                ->delete();
+            
+            // Poi elimina il reperibile
+            $reperibileCancellato = DB::table('reperibiles')
+                ->where('id', $id)
+                ->delete();
+            
+            if ($reperibileCancellato) {
+                return redirect()->route('admin.reperibili.index')
+                    ->with('success', 'Reperibile eliminato con successo')
+                    ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+                    ->header('Pragma', 'no-cache')
+                    ->header('Expires', '0');
+            } else {
+                return redirect()->route('admin.reperibili.index')
+                    ->with('error', 'Impossibile eliminare il reperibile')
+                    ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+                    ->header('Pragma', 'no-cache')
+                    ->header('Expires', '0');
+            }
+        } catch (\Exception $e) {
+            return redirect()->route('admin.reperibili.index')
+                ->with('error', 'Errore durante l\'eliminazione del reperibile: ' . $e->getMessage())
+                ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+                ->header('Pragma', 'no-cache')
+                ->header('Expires', '0');
+        }
     }
-}
-
-    
 }

@@ -10,12 +10,12 @@
 <body>
   <div class="login-container">
     <h1>Accesso Admin</h1>
-    <form method="POST" action="{{ route('admin.login') }}">
+    <form method="POST" action="{{ route('admin.login') }}" autocomplete="off">
       @csrf
       <label for="email">Username</label>
-      <input type="text" id="username" name="username" required autocomplete="username" />
+      <input type="text" id="username" name="username" required autocomplete="off" />
       <label for="password">Password</label>
-      <input type="password" id="password" name="password" required autocomplete="current-password" />
+      <input type="password" id="password" name="password" required autocomplete="off" />
       <button type="submit">Accedi</button>
     </form>
 
