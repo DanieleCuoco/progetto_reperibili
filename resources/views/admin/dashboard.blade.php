@@ -6,6 +6,7 @@
     <title>Dashboard Amministratore</title>
     <link rel="stylesheet" href="{{ asset('dashboard.css') }}">
     <link rel="stylesheet" href="{{ asset('header-animations.css') }}">
+    <link rel="stylesheet" href="{{ asset('modifiche.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 </head>
 <body>
@@ -13,6 +14,76 @@
         <div class="container header-content">
             <h1 class="header-title-hidden"><i class="bi bi-gear-fill"></i> Sistema Gestione Reperibilità</h1>
             <div class="user-controls user-controls-hidden">
+                <!-- Campanello di notifica -->
+                <div class="notification-container">
+                    <button class="notification-btn" id="notificationBtn">
+                        <i class="bi bi-bell"></i>
+                        @if(count($nuoviTurni) + count($modificheTurni) + count($cancellazioniTurni) > 0)
+                            <span class="notification-badge" id="notificationBadge">{{ count($nuoviTurni) + count($modificheTurni) + count($cancellazioniTurni) }}</span>
+                        @endif
+                    </button>
+                    <div class="notification-dropdown" id="notificationDropdown">
+                        <div class="notification-header">
+                            <h3>Notifiche</h3>
+                            <a href="{{ route('admin.modifiche.index') }}" class="view-all-btn">Vedi tutte</a>
+                        </div>
+                        <div class="notification-list">
+                            @if(count($nuoviTurni) > 0)
+                                @foreach($nuoviTurni->take(3) as $turno)
+                                    <div class="notification-item unread">
+                                        <div class="notification-icon">
+                                            <i class="bi bi-plus-square"></i>
+                                        </div>
+                                        <div class="notification-content">
+                                            <p>Nuovo turno da {{ $turno->reperibile ? $turno->reperibile->name : 'Reperibile non trovato' }}</p>
+                                            @if($turno->reperibile && $turno->reperibile->reparto)
+                                                <small>Reparto: {{ $turno->reperibile->reparto->nome }}</small>
+                                            @endif
+                                            <span class="notification-time">{{ $turno->created_at->diffForHumans() }}</span>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @endif
+                            
+                            @if(count($modificheTurni) > 0)
+                                @foreach($modificheTurni->take(3) as $turno)
+                                    <div class="notification-item unread">
+                                        <div class="notification-icon">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </div>
+                                        <div class="notification-content">
+                                            <p>Modifica turno da {{ $turno->reperibile ? $turno->reperibile->nome . ' ' . $turno->reperibile->cognome : 'Reperibile non trovato' }}</p>
+                                            <span class="notification-time">{{ $turno->updated_at->diffForHumans() }}</span>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @endif
+                            
+                            @if(count($cancellazioniTurni) > 0)
+                                @foreach($cancellazioniTurni->take(3) as $turno)
+                                    <div class="notification-item unread">
+                                        <div class="notification-icon">
+                                            <i class="bi bi-trash"></i>
+                                        </div>
+                                        <div class="notification-content">
+                                            <p>Cancellazione turno da {{ $turno->reperibile ? $turno->reperibile->nome . ' ' . $turno->reperibile->cognome : 'Reperibile non trovato' }}</p>
+                                            <span class="notification-time">{{ $turno->updated_at->diffForHumans() }}</span>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @endif
+                            
+                            @if(count($nuoviTurni) + count($modificheTurni) + count($cancellazioniTurni) == 0)
+                                <div class="notification-item">
+                                    <div class="notification-content">
+                                        <p>Nessuna notifica</p>
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                
                 <span><i class="bi bi-person-circle"></i> Benvenuto, {{ Auth::guard('admin')->user()->name }}</span>
                 <form method="POST" action="{{ route('admin.logout') }}">
                     @csrf
@@ -28,9 +99,9 @@
         </div>
         <ul class="sidebar-menu">
             <li class="active"><a href="#"><i class="bi bi-house-fill"></i> Dashboard</a></li>
-            <li><a href="{{ route('admin.reperibili.index') }}"><i class="bi bi-diagram-3-fill"></i> Gestione Reperibili</a></li>
+            <li><a href="{{ route('admin.reperibili.index') }}"><i class="bi bi-people-fill"></i> Gestione Reperibili</a></li>
             <li><a href="{{ route('admin.reparti.index') }}"><i class="bi bi-diagram-3-fill"></i> Gestione Reparti</a></li>
-            <li><a href="#"><i class="bi bi-check2-square"></i> Gestione Modifiche</a></li>
+            <li><a href="{{ route('admin.modifiche.index') }}"><i class="bi bi-check2-square"></i> Gestione Modifiche</a></li>
             <li><a href="#"><i class="bi bi-calendar-event"></i> Calendario</a></li>
         </ul>
     </div>
@@ -63,6 +134,11 @@
                 <h2>Gestione Modifiche</h2>
                 <p>Approva o rifiuta le richieste di modifica, gestisci le notifiche e i cambiamenti.</p>
                 <a href="{{ route('admin.modifiche.index') }}" class="card-link"><i class="bi bi-arrow-right-circle"></i> Accedi</a>
+                @if($modifiche_in_attesa > 0)
+                    <div class="card-notification">
+                        <span class="notification-count">{{ $modifiche_in_attesa }}</span>
+                    </div>
+                @endif
             </div>
         </div>
 
@@ -82,7 +158,7 @@
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon"><i class="bi bi-hourglass-split"></i></div>
-                    <h3>Modifiche in attesa</h3>
+                    <h3>Modifiche in Attesa</h3>
                     <div class="stat-value">{{ $modifiche_in_attesa }}</div>
                 </div>
             </div>
@@ -95,7 +171,8 @@
         </div>
     </footer>
     
-    <!-- Aggiungi lo script delle animazioni prima della chiusura del body -->
+    <!-- Script per le animazioni e notifiche -->
     <script src="{{ asset('header-animations.js') }}"></script>
+    <script src="{{ asset('modifiche.js') }}"></script>
 </body>
 </html>

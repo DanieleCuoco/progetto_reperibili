@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Reperibile;
 use App\Models\Reparto;
+use App\Models\TurnoReperibilita;
 
 class AdminAuthController extends Controller {
     public function showLoginForm() {
@@ -13,7 +14,7 @@ class AdminAuthController extends Controller {
     }
 
     public function index() {
-        // Controllo esplicito dell'autenticazione - QUESTA È LA RIGA CHE RISOLVE TUTTO
+        // Controllo esplicito dell'autenticazione
         if (!Auth::guard('admin')->check()) {
             return redirect()->route('admin.login');
         }
@@ -24,11 +25,30 @@ class AdminAuthController extends Controller {
         // Conta i reparti
         $reparti = Reparto::count();
         
-        // Modifiche in attesa (per ora lasciamo 0 come placeholder)
-        $modifiche_in_attesa = 0;
+        // Recupera i turni in attesa per le notifiche
+        $turniPendenti = TurnoReperibilita::where('is_approved', 0)
+                                         ->with(['reperibile.reparto'])
+                                         ->orderBy('created_at', 'desc')
+                                         ->get();
+        
+        // Filtra i turni per tipo
+        $nuoviTurni = $turniPendenti->filter(function($turno) {
+            return $turno->status === 'nuovo' || $turno->status === null;
+        });
+        
+        $modificheTurni = $turniPendenti->filter(function($turno) {
+            return $turno->status === 'modifica';
+        });
+        
+        $cancellazioniTurni = $turniPendenti->filter(function($turno) {
+            return $turno->status === 'cancellazione';
+        });
+        
+        // Conta le modifiche in attesa
+        $modifiche_in_attesa = count($nuoviTurni) + count($modificheTurni) + count($cancellazioniTurni);
         
         return response()
-            ->view('admin.dashboard', compact('reperibili_attivi', 'reparti', 'modifiche_in_attesa'))
+            ->view('admin.dashboard', compact('reperibili_attivi', 'reparti', 'modifiche_in_attesa', 'nuoviTurni', 'modificheTurni', 'cancellazioniTurni'))
             ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
             ->header('Pragma', 'no-cache')
             ->header('Expires', '0');

@@ -15,31 +15,42 @@ Route::get('/', function () {
 
 // Rotte Admin
 Route::prefix('admin')->name('admin.')->group(function() {
+    // Route di login (NON protette)
     Route::get('login', [AdminAuthController::class,'showLoginForm'])->name('login');
     Route::post('login', [AdminAuthController::class,'login']);
     
-    Route::get('dashboard', [AdminAuthController::class, 'index'])->name('dashboard');
-    Route::post('logout', [AdminAuthController::class,'logout'])->name('logout');
+    // Route protette con middleware personalizzato
+    Route::middleware('admin.auth')->group(function() {
+        Route::get('dashboard', [AdminAuthController::class, 'index'])->name('dashboard');
+        Route::post('logout', [AdminAuthController::class,'logout'])->name('logout');
 
-    Route::resource('reperibili', ReperibileController::class)->parameters(['reperibili' => 'reperibile']);
-    Route::delete('reperibili/delete/{id}', [ReperibileController::class, 'deleteReperibile'])->name('reperibili.delete');
-    Route::resource('reparti', RepartoController::class)->parameters(['reparti' => 'reparto']);
-    
-    // Rotte per la gestione modifiche
-    Route::get('modifiche', [ModificheController::class, 'index'])->name('modifiche.index');
-    Route::post('modifiche/approva/{id}', [ModificheController::class, 'approva'])->name('modifiche.approva');
-    Route::post('modifiche/rifiuta/{id}', [ModificheController::class, 'rifiuta'])->name('modifiche.rifiuta');
+        Route::resource('reperibili', ReperibileController::class)->parameters(['reperibili' => 'reperibile']);
+        Route::delete('reperibili/delete/{id}', [ReperibileController::class, 'deleteReperibile'])->name('reperibili.delete');
+        Route::resource('reparti', RepartoController::class)->parameters(['reparti' => 'reparto']);
+        
+        // Rotte per la gestione modifiche
+        Route::get('modifiche', [ModificheController::class, 'index'])->name('modifiche.index');
+        Route::post('modifiche/approva/{id}', [ModificheController::class, 'approva'])->name('modifiche.approva');
+        Route::post('modifiche/rifiuta/{id}', [ModificheController::class, 'rifiuta'])->name('modifiche.rifiuta');
+    });
 });
 
-// Rotte per i reperibili (SENZA middleware)
+// Rotte per i reperibili
 Route::prefix('reperibile')->name('reperibile.')->group(function() {
+    // Route di login (NON protette)
     Route::get('login', [ReperibileAuthController::class, 'showLoginForm'])->name('login');
     Route::post('login', [ReperibileAuthController::class, 'login']);
-    Route::get('dashboard', [ReperibileAuthController::class, 'dashboard'])->name('dashboard');
-    Route::post('logout', [ReperibileAuthController::class, 'logout'])->name('logout');
     
-    // Rotte per i turni di reperibilità
-    Route::post('turni', [TurnoReperibilitaController::class, 'store'])->name('turni.store');
+    // Route protette con middleware personalizzato
+    Route::middleware('reperibile.auth')->group(function() {
+        Route::get('dashboard', [ReperibileAuthController::class, 'dashboard'])->name('dashboard');
+        Route::post('logout', [ReperibileAuthController::class, 'logout'])->name('logout');
+        
+        // Rotte per i turni di reperibilità
+        Route::post('turni', [TurnoReperibilitaController::class, 'store'])->name('turni.store');
+        Route::put('turni/{turno}', [TurnoReperibilitaController::class, 'update'])->name('turni.update');
+        Route::delete('turni/{turno}', [TurnoReperibilitaController::class, 'destroy'])->name('turni.destroy');
+    });
 });
 
 // Rotte pubbliche

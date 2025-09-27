@@ -1,298 +1,394 @@
-/* Stili per la dashboard dei reperibili */
-:root {
-    --primary-color: #2C3E50;
-    --secondary-color: #00bfff;
-    --accent-color: #ffd700;
-    --text-color: #ECF0F1;
-    --background-color: #1A2530;
-    --card-color: #111;
-    --hover-color: #222;
-    --border-color: #00bfff;
+/* Reset e base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: var(--background-color);
-    color: var(--text-color);
-    margin: 0;
-    padding: 0;
-}
-
-.dashboard-container {
-    display: flex;
-    flex-direction: column;
+    background-color: #1a1a1a;
     min-height: 100vh;
+    color: #fff;
 }
 
-header {
-    background-color: var(--primary-color);
-    padding: 1rem 2rem;
+/* Container principale */
+.dashboard-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header */
+.dashboard-header {
+    background: rgba(34, 34, 34, 0.9);
+    border: 1px solid rgba(0, 191, 255, 0.3);
+    border-radius: 15px;
+    padding: 20px 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 8px 32px rgba(0, 191, 255, 0.1);
+}
+
+.header-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
-header h1 {
-    margin: 0;
-    font-size: 1.5rem;
-    color: var(--secondary-color);
-}
-
-.user-info {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+.dashboard-header h1 {
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 600;
+    text-shadow: 0 0 10px rgba(0, 191, 255, 0.3);
 }
 
 .logout-btn {
-    background-color: transparent;
-    border: 1px solid var(--secondary-color);
-    color: var(--secondary-color);
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
+    background: linear-gradient(45deg, #e74c3c, #c0392b);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: all 0.3s;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .logout-btn:hover {
-    background-color: var(--secondary-color);
-    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px #00bfff, 0 0 30px #ffd700;
 }
 
-main {
+/* Layout principale a griglia - SISTEMATO IL GAP */
+.dashboard-main {
     display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 2rem;
-    padding: 2rem;
-    flex-grow: 1;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    align-items: start;
 }
 
+/* Cards - COLORI ORIGINALI */
 .dashboard-card {
-    background-color: var(--card-color);
-    border-radius: 8px;
-    padding: 1.5rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin-bottom: 1.5rem;
-    border-left: 4px solid var(--secondary-color);
-    box-shadow: 0 0 10px rgba(0, 191, 255, 0.3);
+    background: rgba(34, 34, 34, 0.9);
+    border: 1px solid rgba(0, 191, 255, 0.3);
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 8px 32px rgba(0, 191, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 191, 255, 0.2);
+    border-color: #00bfff;
 }
 
 .dashboard-card h2 {
-    margin-top: 0;
-    color: var(--secondary-color);
-    font-size: 1.3rem;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 0.5rem;
-    margin-bottom: 1rem;
-}
-
-.info-item {
-    margin-bottom: 0.8rem;
+    color: #fff;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
     display: flex;
     align-items: center;
+    gap: 10px;
+    text-shadow: 0 0 10px rgba(0, 191, 255, 0.3);
 }
 
-.info-item strong {
-    min-width: 100px;
-    color: var(--accent-color);
+/* Sezione dati utente */
+.user-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
 }
 
+.user-info div {
+    padding: 12px;
+    background: rgba(0, 191, 255, 0.1);
+    border-radius: 8px;
+    border-left: 4px solid #00bfff;
+    color: #fff !important;
+    font-size: 1rem;
+    line-height: 1.4;
+}
+
+.user-info div strong {
+    color: #00bfff !important;
+    font-weight: 600;
+    margin-right: 8px;
+}
+
+/* Assicuriamoci che il testo sia visibile */
+.user-info div * {
+    color: inherit !important;
+}
+
+/* Gestione turni */
+.turni-gestione {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.turno-gestione-item {
+    background: rgba(34, 34, 34, 0.8);
+    border-radius: 12px;
+    padding: 20px;
+    border-left: 5px solid #00bfff;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 191, 255, 0.2);
+}
+
+.turno-gestione-item:hover {
+    background: rgba(34, 34, 34, 1);
+    transform: translateX(5px);
+    box-shadow: 0 5px 15px rgba(0, 191, 255, 0.2);
+}
+
+.turno-info {
+    margin-bottom: 15px;
+}
+
+.turno-date {
+    font-weight: 600;
+    color: #00bfff;
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+
+.turno-time {
+    color: #aaa;
+    margin-bottom: 10px;
+}
+
+.turno-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.btn-edit, .btn-delete {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.9rem;
+}
+
+.btn-edit {
+    background: linear-gradient(145deg, #2980b9, #3498db);
+    color: white;
+}
+
+.btn-edit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px #00bfff, 0 0 30px #ffd700;
+}
+
+.btn-delete {
+    background: linear-gradient(45deg, #e74c3c, #c0392b);
+    color: white;
+}
+
+.btn-delete:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px #e74c3c;
+}
+
+/* Status badges */
+.status-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-new {
+    background: linear-gradient(45deg, #00bfff, #0099cc);
+    color: white;
+}
+
+.status-modified {
+    background: linear-gradient(45deg, #ffd700, #ffcc00);
+    color: #1a1a1a;
+}
+
+.status-cancellation {
+    background: linear-gradient(45deg, #e74c3c, #c0392b);
+    color: white;
+}
+
+.status-approved {
+    background: linear-gradient(45deg, #27ae60, #229954);
+    color: white;
+}
+
+.status-rejected {
+    background: linear-gradient(45deg, #e74c3c, #c0392b);
+    color: white;
+}
+
+.status-pending {
+    background: linear-gradient(45deg, #ffd700, #ffcc00);
+    color: #1a1a1a;
+}
+
+/* Lista turni */
 .turni-container {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 15px;
+    max-height: 400px;
+    overflow-y: auto;
 }
 
 .turno-item {
-    background-color: rgba(0, 191, 255, 0.1);
-    border-radius: 4px;
-    padding: 1rem;
-    border-left: 3px solid var(--secondary-color);
-}
-
-.turno-item .turno-date {
-    font-weight: bold;
-    color: var(--accent-color);
-    margin-bottom: 0.5rem;
-}
-
-.turno-item .turno-time {
-    color: var(--text-color);
-    margin-bottom: 0.5rem;
-}
-
-.turno-item .turno-note {
-    font-style: italic;
-    color: #95a5a6;
-}
-
-.form-group {
-    margin-bottom: 1rem;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    color: var(--accent-color);
-}
-
-.form-group input, .form-group textarea {
-    width: 95%;
-    padding: 0.8rem;
-    border-radius: 4px;
-    border: 1px solid var(--border-color);
-    background-color: rgba(255, 255, 255, 0.1);
-    color: var(--text-color);
-}
-
-.form-group input:focus, .form-group textarea:focus {
-    outline: none;
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.2);
-}
-
-.btn-submit {
-    background-color: var(--secondary-color);
-    color: white;
-    border: none;
-    padding: 0.8rem 1.5rem;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.btn-submit:hover {
-    background-color: #0099cc;
-}
-
-.empty-state {
-    text-align: center;
-    padding: 2rem;
-    color: #95a5a6;
-}
-
-.empty-state p {
-    margin-bottom: 1rem;
-}
-
-.alert {
+    background: rgba(34, 34, 34, 0.6);
+    border-radius: 10px;
     padding: 15px;
+    border-left: 4px solid #00bfff;
+    color: #fff;
+}
+
+/* Form */
+.form-group {
     margin-bottom: 20px;
-    border-radius: 4px;
 }
 
-.alert-success {
-    background-color: rgba(39, 174, 96, 0.2);
-    border-left: 4px solid #27ae60;
-    color: #2ecc71;
-}
-
-
-/* Stili migliorati per i selettori di data e ora */
-input[type="date"], 
-input[type="time"] {
-    width: calc(100% - 30px); /* Riduce la larghezza per evitare lo sforamento */
-    padding: 10px;
-    border-radius: 8px;
-    background-color: #2C3E50;
-    color: #ECF0F1;
-    border: 2px solid #00bfff;
-    font-size: 16px;
-    margin-top: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-sizing: border-box; /* Assicura che padding e bordo siano inclusi nella larghezza */
-}
-
-/* Migliora l'aspetto del calendario */
-::-webkit-calendar-picker-indicator {
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" viewBox="0 0 24 24"><path fill="%2300bfff" d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z"/></svg>');
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-    opacity: 0.9;
-    filter: none; /* Rimuove l'inversione per usare il nostro SVG personalizzato */
-    padding: 4px;
-    margin-right: 5px;
-    border-radius: 4px;
-    background-color: transparent;
-}
-
-::-webkit-calendar-picker-indicator:hover {
-    opacity: 1;
-    background-color: rgba(0, 191, 255, 0.2);
-    transform: scale(1.1);
-}
-
-/* Stile personalizzato per il selettore dell'orario */
-input[type="time"]::-webkit-calendar-picker-indicator {
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" viewBox="0 0 24 24"><path fill="%2300bfff" d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/><path fill="%2300bfff" d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>');
-}
-
-/* Stile per il calendario quando appare */
-.calendar-popup {
-    background-color: #1A2530 !important;
-    border: 2px solid #00bfff !important;
-    border-radius: 8px !important;
-    box-shadow: 0 0 15px rgba(0, 191, 255, 0.4) !important;
-    color: #ECF0F1 !important;
-}
-
-.calendar-popup td, 
-.calendar-popup th {
-    color: #ECF0F1 !important;
-    font-weight: bold !important;
-}
-
-.calendar-popup td:hover {
-    background-color: #00bfff !important;
-    color: #1A2530 !important;
-    border-radius: 4px !important;
-}
-
-.calendar-popup .today {
-    background-color: rgba(0, 191, 255, 0.3) !important;
-    border-radius: 4px !important;
-}
-
-/* Stile per il selettore dell'orario quando appare */
-.time-popup {
-    background-color: #1A2530 !important;
-    border: 2px solid #00bfff !important;
-    border-radius: 8px !important;
-    box-shadow: 0 0 15px rgba(0, 191, 255, 0.4) !important;
-    color: #ECF0F1 !important;
-    padding: 10px !important;
-}
-
-.time-popup select {
-    background-color: #2C3E50 !important;
-    color: #ECF0F1 !important;
-    border: 1px solid #00bfff !important;
-    border-radius: 4px !important;
-    padding: 5px !important;
-    margin: 5px !important;
-}
-
-.time-popup select:focus {
-    outline: none !important;
-    box-shadow: 0 0 5px #00bfff !important;
-}
-
-/* Migliora la visibilità delle etichette */
 .form-group label {
     display: block;
     margin-bottom: 8px;
-    font-weight: bold;
+    font-weight: 600;
     color: #00bfff;
-    font-size: 16px;
 }
 
-/* Migliora lo spazio tra i gruppi di form */
-.form-group {
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid rgba(0, 191, 255, 0.3);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    background: rgba(34, 34, 34, 0.8);
+    color: #fff;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #00bfff;
+    box-shadow: 0 0 0 3px rgba(0, 191, 255, 0.1);
+}
+
+.form-buttons {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.btn-submit, .btn-cancel {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+}
+
+.btn-submit {
+    background: linear-gradient(45deg, #27ae60, #229954);
+    color: white;
+    flex: 1;
+}
+
+.btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px #27ae60;
+}
+
+.btn-cancel {
+    background: linear-gradient(45deg, #95a5a6, #7f8c8d);
+    color: white;
+}
+
+.btn-cancel:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px #95a5a6;
+}
+
+/* Alert messages */
+.alert {
+    padding: 15px 20px;
+    border-radius: 10px;
     margin-bottom: 20px;
-    max-width: 100%; /* Assicura che il contenitore non sfori */
+    font-weight: 500;
+    grid-column: 1 / -1;
 }
 
-/* Aggiungi l'input mancante per la data di inizio */
+.alert-success {
+    background: rgba(39, 174, 96, 0.2);
+    color: #27ae60;
+    border: 1px solid #27ae60;
+}
+
+.alert-error {
+    background: rgba(231, 76, 60, 0.2);
+    color: #e74c3c;
+    border: 1px solid #e74c3c;
+}
+
+/* Empty state */
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: #aaa;
+    font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .dashboard-main {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .user-info {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-container {
+        padding: 15px;
+    }
+    
+    .header-content {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .dashboard-card {
+        padding: 20px;
+    }
+    
+    .form-buttons {
+        flex-direction: column;
+    }
+    
+    .turno-actions {
+        flex-direction: column;
+    }
+    
+    .dashboard-main {
+        gap: 15px;
+    }
+}
