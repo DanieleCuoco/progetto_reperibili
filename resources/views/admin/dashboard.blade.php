@@ -6,6 +6,7 @@
     <title>Dashboard Amministratore</title>
     <link rel="stylesheet" href="{{ asset('dashboard.css') }}">
     <link rel="stylesheet" href="{{ asset('header-animations.css') }}">
+    <link rel="stylesheet" href="{{ asset('sidebar-animations.css') }}">
     <link rel="stylesheet" href="{{ asset('modifiche.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 </head>
@@ -24,67 +25,62 @@
                     </button>
                     <div class="notification-dropdown" id="notificationDropdown">
                         <div class="notification-header">
-                            <h3>Notifiche</h3>
-                            <a href="{{ route('admin.modifiche.index') }}" class="view-all-btn">Vedi tutte</a>
+                            <h4>Notifiche</h4>
+                            <button class="close-notifications" id="closeNotifications">
+                                <i class="bi bi-x"></i>
+                            </button>
                         </div>
-                        <div class="notification-list">
+                        <div class="notification-content">
                             @if(count($nuoviTurni) > 0)
-                                @foreach($nuoviTurni->take(3) as $turno)
-                                    <div class="notification-item unread">
-                                        <div class="notification-icon">
-                                            <i class="bi bi-plus-square"></i>
+                                <div class="notification-section">
+                                    <h5><i class="bi bi-plus-circle"></i> Nuovi Turni ({{ count($nuoviTurni) }})</h5>
+                                    @foreach($nuoviTurni as $turno)
+                                        <div class="notification-item">
+                                            <p><strong>{{ $turno->reperibile->nome }} {{ $turno->reperibile->cognome }}</strong></p>
+                                            <p>{{ \Carbon\Carbon::parse($turno->data_inizio)->format('d/m/Y H:i') }} - {{ \Carbon\Carbon::parse($turno->data_fine)->format('d/m/Y H:i') }}</p>
+                                            <small>{{ $turno->reparto->nome }}</small>
                                         </div>
-                                        <div class="notification-content">
-                                            <p>Nuovo turno da {{ $turno->reperibile ? $turno->reperibile->name : 'Reperibile non trovato' }}</p>
-                                            @if($turno->reperibile && $turno->reperibile->reparto)
-                                                <small>Reparto: {{ $turno->reperibile->reparto->nome }}</small>
-                                            @endif
-                                            <span class="notification-time">{{ $turno->created_at->diffForHumans() }}</span>
-                                        </div>
-                                    </div>
-                                @endforeach
+                                    @endforeach
+                                </div>
                             @endif
-                            
+
                             @if(count($modificheTurni) > 0)
-                                @foreach($modificheTurni->take(3) as $turno)
-                                    <div class="notification-item unread">
-                                        <div class="notification-icon">
-                                            <i class="bi bi-pencil-square"></i>
+                                <div class="notification-section">
+                                    <h5><i class="bi bi-pencil-square"></i> Modifiche Turni ({{ count($modificheTurni) }})</h5>
+                                    @foreach($modificheTurni as $turno)
+                                        <div class="notification-item">
+                                            <p><strong>{{ $turno->reperibile->nome }} {{ $turno->reperibile->cognome }}</strong></p>
+                                            <p>{{ \Carbon\Carbon::parse($turno->data_inizio)->format('d/m/Y H:i') }} - {{ \Carbon\Carbon::parse($turno->data_fine)->format('d/m/Y H:i') }}</p>
+                                            <small>{{ $turno->reparto->nome }}</small>
                                         </div>
-                                        <div class="notification-content">
-                                            <p>Modifica turno da {{ $turno->reperibile ? $turno->reperibile->nome . ' ' . $turno->reperibile->cognome : 'Reperibile non trovato' }}</p>
-                                            <span class="notification-time">{{ $turno->updated_at->diffForHumans() }}</span>
-                                        </div>
-                                    </div>
-                                @endforeach
+                                    @endforeach
+                                </div>
                             @endif
-                            
+
                             @if(count($cancellazioniTurni) > 0)
-                                @foreach($cancellazioniTurni->take(3) as $turno)
-                                    <div class="notification-item unread">
-                                        <div class="notification-icon">
-                                            <i class="bi bi-trash"></i>
+                                <div class="notification-section">
+                                    <h5><i class="bi bi-trash"></i> Cancellazioni Turni ({{ count($cancellazioniTurni) }})</h5>
+                                    @foreach($cancellazioniTurni as $turno)
+                                        <div class="notification-item">
+                                            <p><strong>{{ $turno->reperibile->nome }} {{ $turno->reperibile->cognome }}</strong></p>
+                                            <p>{{ \Carbon\Carbon::parse($turno->data_inizio)->format('d/m/Y H:i') }} - {{ \Carbon\Carbon::parse($turno->data_fine)->format('d/m/Y H:i') }}</p>
+                                            <small>{{ $turno->reparto->nome }}</small>
                                         </div>
-                                        <div class="notification-content">
-                                            <p>Cancellazione turno da {{ $turno->reperibile ? $turno->reperibile->nome . ' ' . $turno->reperibile->cognome : 'Reperibile non trovato' }}</p>
-                                            <span class="notification-time">{{ $turno->updated_at->diffForHumans() }}</span>
-                                        </div>
-                                    </div>
-                                @endforeach
+                                    @endforeach
+                                </div>
                             @endif
-                            
+
                             @if(count($nuoviTurni) + count($modificheTurni) + count($cancellazioniTurni) == 0)
-                                <div class="notification-item">
-                                    <div class="notification-content">
-                                        <p>Nessuna notifica</p>
-                                    </div>
+                                <div class="no-notifications">
+                                    <i class="bi bi-check-circle"></i>
+                                    <p>Nessuna notifica</p>
                                 </div>
                             @endif
                         </div>
                     </div>
                 </div>
-                
-                <span><i class="bi bi-person-circle"></i> Benvenuto, {{ Auth::guard('admin')->user()->name }}</span>
+
+                <!-- Logout -->
                 <form method="POST" action="{{ route('admin.logout') }}">
                     @csrf
                     <button type="submit" class="logout-btn"><i class="bi bi-box-arrow-right"></i> Logout</button>
@@ -98,11 +94,11 @@
             <i class="bi bi-list"></i> Menu
         </div>
         <ul class="sidebar-menu">
-            <li class="active"><a href="#"><i class="bi bi-house-fill"></i> Dashboard</a></li>
-            <li><a href="{{ route('admin.reperibili.index') }}"><i class="bi bi-people-fill"></i> Gestione Reperibili</a></li>
-            <li><a href="{{ route('admin.reparti.index') }}"><i class="bi bi-diagram-3-fill"></i> Gestione Reparti</a></li>
-            <li><a href="{{ route('admin.modifiche.index') }}"><i class="bi bi-check2-square"></i> Gestione Modifiche</a></li>
-            <li><a href="#"><i class="bi bi-calendar-event"></i> Calendario</a></li>
+            <li class="active"><a href="#"><i class="bi bi-house-fill"></i> <span>Dashboard</span></a></li>
+            <li><a href="{{ route('admin.reperibili.index') }}"><i class="bi bi-people-fill"></i> <span>Gestione Reperibili</span></a></li>
+            <li><a href="{{ route('admin.reparti.index') }}"><i class="bi bi-diagram-3-fill"></i> <span>Gestione Reparti</span></a></li>
+            <li><a href="{{ route('admin.modifiche.index') }}"><i class="bi bi-check2-square"></i> <span>Gestione Modifiche</span></a></li>
+            <li><a href="{{ route('users.calendar') }}"><i class="bi bi-calendar-event"></i> <span>Calendario</span></a></li>
         </ul>
     </div>
 
@@ -173,6 +169,7 @@
     
     <!-- Script per le animazioni e notifiche -->
     <script src="{{ asset('header-animations.js') }}"></script>
+    <script src="{{ asset('sidebar-animations.js') }}"></script>
     <script src="{{ asset('modifiche.js') }}"></script>
 </body>
 </html>

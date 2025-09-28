@@ -30,8 +30,8 @@
             <li><a href="{{ route('admin.dashboard') }}"><i class="bi bi-house-fill"></i> Dashboard</a></li>
             <li><a href="{{ route('admin.reperibili.index') }}"><i class="bi bi-people-fill"></i> Gestione Reperibili</a></li>
             <li class="active"><a href="{{ route('admin.reparti.index') }}"><i class="bi bi-diagram-3-fill"></i> Gestione Reparti</a></li>
-            <li><a href="#"><i class="bi bi-check2-square"></i> Gestione Modifiche</a></li>
-            <li><a href="#"><i class="bi bi-calendar-event"></i> Calendario</a></li>
+            <li><a href="{{ route('admin.modifiche.index') }}"><i class="bi bi-check2-square"></i> Gestione Modifiche</a></li>
+            <li><a href="{{ route('users.calendar') }}"><i class="bi bi-calendar-event"></i> Calendario</a></li>
         </ul>
     </div>
 

@@ -1,0 +1,325 @@
+/* ===== SIDEBAR MODERNA E INTEGRATA ===== */
+
+/* Override dello sfondo nero - DESIGN MODERNO */
+.sidebar {
+    /* Rimuovi il nero brutto e aggiungi un gradiente elegante */
+    background: linear-gradient(180deg, 
+        rgba(26, 26, 26, 0.95) 0%,
+        rgba(17, 17, 17, 0.98) 50%,
+        rgba(0, 0, 0, 0.95) 100%);
+    
+    /* Aggiungi un backdrop blur per effetto vetro */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    
+    /* Bordo elegante invece del nero pieno */
+    border-right: 1px solid rgba(0, 191, 255, 0.3);
+    box-shadow: 
+        2px 0 20px rgba(0, 0, 0, 0.3),
+        inset -1px 0 0 rgba(0, 191, 255, 0.1);
+    
+    /* Animazioni fluide */
+    transform: translateX(-100%);
+    opacity: 0;
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    
+    /* Dimensioni e posizione */
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    padding-top: 80px;
+    z-index: 90;
+    
+    /* Scroll personalizzato */
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.sidebar.sidebar-loaded {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+/* Header della sidebar con gradiente */
+.sidebar-header {
+    background: linear-gradient(135deg, 
+        rgba(0, 191, 255, 0.1) 0%, 
+        rgba(0, 191, 255, 0.05) 100%);
+    padding: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    border-bottom: 1px solid rgba(0, 191, 255, 0.2);
+    margin-bottom: 15px;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(0, 191, 255, 0.3);
+    
+    /* Animazione di entrata */
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.sidebar-header.header-loaded {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Menu items con design moderno */
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-menu li {
+    margin: 5px 10px;
+    border-radius: 12px;
+    overflow: hidden;
+    
+    /* Animazioni di entrata */
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.sidebar-menu li.menu-item-loaded {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.sidebar-menu li a {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    
+    /* Sfondo trasparente di default */
+    background: transparent;
+}
+
+/* Effetto hover elegante */
+.sidebar-menu li:hover {
+    transform: translateX(5px);
+}
+
+.sidebar-menu li:hover a {
+    background: linear-gradient(135deg, 
+        rgba(0, 191, 255, 0.15) 0%, 
+        rgba(0, 191, 255, 0.08) 100%);
+    box-shadow: 
+        0 4px 15px rgba(0, 191, 255, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    color: #00bfff;
+}
+
+/* Effetto di slide per il background hover */
+.sidebar-menu li a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent 0%,
+        rgba(0, 191, 255, 0.1) 50%,
+        transparent 100%);
+    transition: left 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    z-index: -1;
+}
+
+.sidebar-menu li:hover a::before {
+    left: 0;
+}
+
+/* Icone con animazioni */
+.sidebar-menu li a i {
+    margin-right: 15px;
+    font-size: 18px;
+    width: 20px;
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.sidebar-menu li:hover a i {
+    transform: scale(1.1);
+    color: #00bfff;
+    text-shadow: 0 0 8px rgba(0, 191, 255, 0.6);
+}
+
+/* Testo del menu */
+.sidebar-menu li a span {
+    font-weight: 500;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.sidebar-menu li:hover a span {
+    font-weight: 600;
+    text-shadow: 0 0 5px rgba(0, 191, 255, 0.3);
+}
+
+/* Menu attivo con design elegante */
+.sidebar-menu li.active a {
+    background: linear-gradient(135deg, 
+        rgba(0, 191, 255, 0.2) 0%, 
+        rgba(0, 191, 255, 0.1) 100%);
+    border-left: 4px solid #00bfff;
+    color: #00bfff;
+    font-weight: 600;
+    box-shadow: 
+        0 4px 20px rgba(0, 191, 255, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-menu li.active a::after {
+    content: '';
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 6px;
+    background: #00bfff;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(0, 191, 255, 0.8);
+    animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+    0%, 100% {
+        opacity: 1;
+        transform: translateY(-50%) scale(1);
+    }
+    50% {
+        opacity: 0.7;
+        transform: translateY(-50%) scale(1.2);
+    }
+}
+
+/* Scrollbar personalizzata */
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, 
+        rgba(0, 191, 255, 0.6) 0%, 
+        rgba(0, 191, 255, 0.3) 100%);
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, 
+        rgba(0, 191, 255, 0.8) 0%, 
+        rgba(0, 191, 255, 0.5) 100%);
+    box-shadow: 0 0 5px rgba(0, 191, 255, 0.5);
+}
+
+/* Effetto di caricamento */
+.sidebar-loading::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        #00bfff 50%, 
+        transparent 100%);
+    animation: loading-sweep 1.5s ease-in-out;
+    z-index: 1000;
+}
+
+@keyframes loading-sweep {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+/* Responsive per mobile */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        background: linear-gradient(180deg, 
+            rgba(0, 0, 0, 0.95) 0%,
+            rgba(17, 17, 17, 0.98) 100%);
+        backdrop-filter: blur(15px);
+    }
+    
+    .sidebar.sidebar-mobile-open {
+        transform: translateX(0);
+    }
+    
+    /* Overlay per mobile */
+    .sidebar-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: 85;
+        backdrop-filter: blur(2px);
+    }
+    
+    .sidebar-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+/* Effetti speciali per una sidebar più moderna */
+.sidebar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 20%, rgba(0, 191, 255, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(0, 191, 255, 0.02) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Animazione di entrata per nuovi elementi */
+.sidebar-menu li.new-item {
+    animation: slide-in-bounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes slide-in-bounce {
+    0% {
+        opacity: 0;
+        transform: translateX(-50px) scale(0.8);
+    }
+    60% {
+        opacity: 0.8;
+        transform: translateX(10px) scale(1.05);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
