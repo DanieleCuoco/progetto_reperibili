@@ -28,6 +28,7 @@ class AdminAuthController extends Controller {
         // Recupera i turni in attesa per le notifiche
         $turniPendenti = TurnoReperibilita::where('is_approved', 0)
                                          ->with(['reperibile.reparto'])
+                                         ->whereHas('reperibile') // Solo turni con reperibile esistente
                                          ->orderBy('created_at', 'desc')
                                          ->get();
         

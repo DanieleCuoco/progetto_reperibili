@@ -36,9 +36,9 @@
                                     <h5><i class="bi bi-plus-circle"></i> Nuovi Turni ({{ count($nuoviTurni) }})</h5>
                                     @foreach($nuoviTurni as $turno)
                                         <div class="notification-item">
-                                            <p><strong>{{ $turno->reperibile->nome }} {{ $turno->reperibile->cognome }}</strong></p>
+                                            <p><strong>{{ $turno->reperibile->name }}</strong></p>
                                             <p>{{ \Carbon\Carbon::parse($turno->data_inizio)->format('d/m/Y H:i') }} - {{ \Carbon\Carbon::parse($turno->data_fine)->format('d/m/Y H:i') }}</p>
-                                            <small>{{ $turno->reparto->nome }}</small>
+                                            <small>{{ $turno->reperibile->reparto ? $turno->reperibile->reparto->nome : 'Reparto non disponibile' }}</small>
                                         </div>
                                     @endforeach
                                 </div>
@@ -49,9 +49,9 @@
                                     <h5><i class="bi bi-pencil-square"></i> Modifiche Turni ({{ count($modificheTurni) }})</h5>
                                     @foreach($modificheTurni as $turno)
                                         <div class="notification-item">
-                                            <p><strong>{{ $turno->reperibile->nome }} {{ $turno->reperibile->cognome }}</strong></p>
+                                            <p><strong>{{ $turno->reperibile->name }}</strong></p>
                                             <p>{{ \Carbon\Carbon::parse($turno->data_inizio)->format('d/m/Y H:i') }} - {{ \Carbon\Carbon::parse($turno->data_fine)->format('d/m/Y H:i') }}</p>
-                                            <small>{{ $turno->reparto->nome }}</small>
+                                            <small>{{ $turno->reperibile->reparto ? $turno->reperibile->reparto->nome : 'Reparto non disponibile' }}</small>
                                         </div>
                                     @endforeach
                                 </div>
@@ -62,9 +62,9 @@
                                     <h5><i class="bi bi-trash"></i> Cancellazioni Turni ({{ count($cancellazioniTurni) }})</h5>
                                     @foreach($cancellazioniTurni as $turno)
                                         <div class="notification-item">
-                                            <p><strong>{{ $turno->reperibile->nome }} {{ $turno->reperibile->cognome }}</strong></p>
+                                            <p><strong>{{ $turno->reperibile->name }}</strong></p>
                                             <p>{{ \Carbon\Carbon::parse($turno->data_inizio)->format('d/m/Y H:i') }} - {{ \Carbon\Carbon::parse($turno->data_fine)->format('d/m/Y H:i') }}</p>
-                                            <small>{{ $turno->reparto->nome }}</small>
+                                            <small>{{ $turno->reperibile->reparto ? $turno->reperibile->reparto->nome : 'Reparto non disponibile' }}</small>
                                         </div>
                                     @endforeach
                                 </div>

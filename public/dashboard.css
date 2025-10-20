@@ -111,11 +111,54 @@ h1, h2, h3 {
     text-align: center;
 }
 
-/* Main Content */
+/* Main Content - INTEGRATO SENZA STACCHI */
 .main-content {
     margin-left: 250px;
     padding: 30px;
     flex: 1;
+    min-height: 100vh;
+    
+    /* SFONDO UNIFORME che si integra con la sidebar */
+    background: linear-gradient(135deg, 
+        rgba(0, 0, 0, 0.95) 0%,
+        rgba(10, 10, 10, 0.92) 50%,
+        rgba(0, 0, 0, 0.95) 100%);
+    
+    /* Transizione fluida */
+    transition: all 0.3s ease;
+}
+
+/* Assicurati che il body abbia lo stesso sfondo */
+body {
+    margin: 0;
+    background: linear-gradient(135deg, 
+        rgba(0, 0, 0, 0.95) 0%,
+        rgba(10, 10, 10, 0.92) 50%,
+        rgba(0, 0, 0, 0.95) 100%);
+    color: #fff;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Override della sidebar nel dashboard.css per evitare conflitti */
+.sidebar {
+    width: 250px;
+    background: linear-gradient(180deg, 
+        rgba(45, 45, 45, 0.98) 0%,
+        rgba(40, 40, 40, 0.96) 25%,
+        rgba(35, 35, 35, 0.94) 50%,
+        rgba(40, 40, 40, 0.96) 75%,
+        rgba(45, 45, 45, 0.98) 100%) !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    padding-top: 80px;
+    box-shadow: 2px 0 15px rgba(0, 0, 0, 0.2) !important;
+    z-index: 90;
+    border-right: 1px solid rgba(0, 191, 255, 0.2) !important;
 }
 
 .page-header {

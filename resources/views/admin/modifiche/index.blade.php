@@ -55,7 +55,7 @@
                                                 <i class="bi bi-pencil-square"></i>
                                             </div>
                                             <div class="notification-content">
-                                                <p>Modifica turno da {{ $turno->reperibile ? $turno->reperibile->nome . ' ' . $turno->reperibile->cognome : 'Reperibile non trovato' }}</p>
+                                                <p>Modifica turno da {{ $turno->reperibile ? $turno->reperibile->name : 'Reperibile non trovato' }}</p>
                                                 <span class="notification-time">{{ $turno->updated_at->diffForHumans() }}</span>
                                             </div>
                                         </div>
@@ -151,7 +151,7 @@
                         @foreach($modificheTurni as $turno)
                             <div class="modifica-card">
                                 <div class="card-header">
-                                    <h4>{{ $turno->reperibile ? $turno->reperibile->nome . ' ' . $turno->reperibile->cognome : 'Reperibile non trovato' }}</h4>
+                                    <h4>{{ $turno->reperibile ? $turno->reperibile->name : 'Reperibile non trovato' }}</h4>
                                     <span class="status-badge status-modified">Modificato</span>
                                 </div>
                                 <div class="card-body">
@@ -205,7 +205,7 @@
                         @foreach($cancellazioniTurni as $turno)
                             <div class="modifica-card">
                                 <div class="card-header">
-                                    <h4>{{ $turno->reperibile ? $turno->reperibile->nome . ' ' . $turno->reperibile->cognome : 'Reperibile non trovato' }}</h4>
+                                    <h4>{{ $turno->reperibile ? $turno->reperibile->name : 'Reperibile non trovato' }}</h4>
                                     <span class="status-badge status-cancelled">Da Cancellare</span>
                                 </div>
                                 <div class="card-body">
