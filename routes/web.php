@@ -57,3 +57,8 @@ Route::prefix('reperibile')->name('reperibile.')->group(function() {
 Route::prefix('users')->name('users.')->group(function () {
     Route::get('/calendar', [UserController::class, 'calendar'])->name('calendar');
 });
+
+// Route fallback per 404 personalizzato
+Route::fallback(function () {
+    return response()->view('errors.404', [], 404);
+});
