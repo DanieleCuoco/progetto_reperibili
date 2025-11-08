@@ -19,9 +19,11 @@ html, body {
     margin: 0;
 }
 
+/* Contenitore principale del calendario */
 .calendar-container {
     width: 95vw;
-    height: 95vh;
+    height: 98vh;            /* prima: 95vh */
+    padding: 1.5vh 1.5vw;    /* prima: 2vh 2vw */
     margin: 0;
     padding: 2vh 2vw;
     background: rgba(34, 34, 34, 0.8);
@@ -47,13 +49,7 @@ html, body {
     text-align: center;
 }
 
-.calendar-body {
-    flex: 1 1 auto;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-}
-
+/* Header giorni della settimana */
 .weekdays {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
@@ -75,11 +71,13 @@ html, body {
     justify-content: center;
 }
 
+/* Griglia dei giorni */
 .days {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    grid-template-rows: repeat(6, 1fr);
-    gap: 1vh;
+    grid-template-rows: repeat(6, minmax(0, 1fr));  /* prima: repeat(6, 1fr) */
+    gap: 0.7vh;             /* prima: 1vh */
+    padding: 0.2vh;         /* prima: 0.5vh */
     flex: 1;
     padding: 0.5vh;
 }
@@ -93,7 +91,11 @@ html, body {
     cursor: pointer;
     transition: all 0.4s ease;
     position: relative;
-    overflow: hidden;
+    overflow: hidden; /* assicura bordi puliti con il border-radius */
+    border: 1px solid rgba(255, 255, 255, 0.06); /* bordo sottile e neutro */
+    box-shadow:
+        0 0 30px rgba(0, 191, 255, 0.2),        /* glow esterno blu (come prima) */
+        inset 0 0 0 1px rgba(255, 255, 255, 0.05); /* leggero inner-border per uniformare il bordo */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
@@ -208,6 +210,12 @@ html, body {
 .department-filter {
     margin: 1rem auto;
     max-width: 400px;
+}
+
+
+.department-filter:hover #department-select {
+    box-shadow: 0 0 10px rgba(0, 191, 255, 5);
+    border-color: rgba(0, 191, 255, 0.6);
 }
 
 #department-select {

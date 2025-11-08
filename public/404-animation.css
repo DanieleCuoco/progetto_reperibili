@@ -176,7 +176,7 @@ p {
 .face__eye-lid,
 .face__pupil {
     animation-duration: 4s;
-    animation-delay: 1.3s;
+    animation-delay: 0.6s;
     animation-iteration-count: infinite;
 }
 
